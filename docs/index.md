@@ -1,21 +1,21 @@
-<h1 align="center"> Biblioteca do Campus </h1>
-<h3 align="center"> Grupo 2 </h3>
+# Biblioteca do Campus - Grupo 2
 
-<p align="justify">
-Boas vindas! Esta é a página da documentação do projeto da <a href="https://github.com/charles-serafim/AdaTech.BibliotecaDoCampus">Biblioteca do Campus</a>, realizado durante o módulo de Orientação a Objetos I do Curso de Back End em C# da <a href ="https://ada.tech/">Ada Tech</a> em parceria com o <a href ="https://ada.tech/">Mercado Eletrônico</a>.</p>
+Boas vindas! Esta é a página da documentação do projeto da [Biblioteca do Campus](https://github.com/charles-serafim/AdaTech.BibliotecaDoCampus), realizado durante o módulo de Orientação a Objetos I do Curso de Back End em C# da [Ada Tech](https://ada.tech/) em parceria com o [Mercado Eletrônico](https://www.me.com.br/)
 
-<p align="justify">
-O objetivo do projeto foi a construção de uma aplicação em C# e .NET para o gerenciamento de uma Biblioteca, e o grupo buscou construir a solução de forma a exercitar conteúdos como Lógica de Programação, Orientação a Objetos, modelagem UML, levantamento e representação de requisitos, metodologias ágeis como Scrum e XP, dentre outros assuntos.</p>
 
-<p align="justify">
+O objetivo do projeto foi a construção de uma aplicação em C# e .NET para o gerenciamento de uma Biblioteca, e o grupo buscou construir a solução de forma a exercitar conteúdos como Lógica de Programação, Orientação a Objetos, modelagem UML, levantamento e representação de requisitos, metodologias ágeis como Scrum e XP, dentre outros assuntos.
+
+
 Nesta documentação, poderão ser encontrados os seguintes artefatos do projeto:
-- Lista de Requisitos
-- Diagramas de Classe
-</p>
+
+#### Lista de Requisitos
+#### Diagramas de Classe
 
 
-## 💻 Equipe <a name="team"></a>
+## 💻 Equipe
 
+
+[//]: # (seria melhor deixar essa parte em html)
 <div>
   <table>
     <tr>
