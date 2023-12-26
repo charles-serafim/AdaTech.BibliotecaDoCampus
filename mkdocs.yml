@@ -31,6 +31,8 @@ theme:
 
 nav:
   - Início: "index.md"
+  - Diagramas UML: "diagramas.md"
+  - Lista de Requisitos: "requisitos.md" 
 
 repo_url: https://github.com/charles-serafim/AdaTech.BibliotecaDoCampus
 repo_name: AdaTech.BibliotecaDoCampus
