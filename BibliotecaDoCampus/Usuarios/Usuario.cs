@@ -8,6 +8,7 @@
         double multaTotal;
         NivelAcesso nivelAcesso;
 
+
         public abstract void VerificarDisponibilidade();
         public abstract void ExibirHistorico(List<Emprestimo> emprestimos);
         public abstract void ListarReservas(List<Emprestimo> reservas);
