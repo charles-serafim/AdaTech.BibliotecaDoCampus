@@ -29,6 +29,9 @@ theme:
       primary: light green
       accent: indigo
 
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.14/svg.min.js
+
 nav:
   - Início: "index.md"
   - Diagramas UML: "diagramas.md"
