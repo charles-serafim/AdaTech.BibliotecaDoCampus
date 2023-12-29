@@ -8,8 +8,8 @@ namespace SistemaGerenciamento;
 
 public enum NivelAcesso
 {
-    Diretor,
-    Atendente,
+    Estudante,
     Professor,
-    Estudante
+    Atendente,
+    Diretor
 }
