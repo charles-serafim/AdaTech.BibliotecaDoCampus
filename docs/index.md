@@ -8,8 +8,8 @@ O objetivo do projeto foi a construção de uma aplicação em C# e .NET para o 
 
 Nesta documentação, poderão ser encontrados os seguintes artefatos do projeto:
 
-#### Lista de Requisitos
-#### Diagramas de Classe
+### Lista de Requisitos
+### Diagramas de Classe
 
 
 ## 💻 Equipe
