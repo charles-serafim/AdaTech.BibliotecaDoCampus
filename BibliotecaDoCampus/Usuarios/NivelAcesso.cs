@@ -1,6 +1,6 @@
 ﻿namespace Usuarios
 {
-    internal enum NivelAcesso
+    public enum NivelAcesso
     {
         Diretor = 1,
         Atendente = 2,

@@ -10,9 +10,12 @@ namespace Usuarios.Funcionarios
     {
         int idAtendente;
 
-        public void AtualizarCadastro(Usuario usuario)
+        public void AtualizarCadastro(Usuario usuario, string? nome, string? sobrenome, string? email, NivelAcesso? nivelAcesso)
         {
-            throw new NotImplementedException();
+            usuario.nome = nome;
+            usuario.sobrenome = sobrenome;
+            usuario.email = email;
+            usuario.nivelAcesso = (NivelAcesso)nivelAcesso;
         }
 
         public void AutorizarEmprestimo(Livro livro, Usuario usuario, int? idReserva = 0)
