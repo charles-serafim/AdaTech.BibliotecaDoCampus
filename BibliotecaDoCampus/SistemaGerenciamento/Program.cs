@@ -117,6 +117,7 @@ internal class Program
 
         listaDeUsuarios.Add(novoUsuario);
     }
+
     static void CadastrarLivro()
     {
         string titulo, autores;
@@ -156,4 +157,28 @@ internal class Program
 
         listaDeLivros.Add(novoLivro);
     }
+
+
+    // Luana:
+    // ListarLivros(): List<Livro>
+    // ListarLivrosPorSetor(setor:string) :List<Livro>
+    // ListarLivrosDisponiveis(): List<Livro>
+    // ListarLivrosEmprestados(): List<Livro>
+
+
+    // Monalisa:
+    // AutenticarUsuario(codigoAcesso:string, nivelAcesso:NivelAcesso, senha:string) : Usuario
+    // Inicializar()
+    // AtualizarExemplar(livro:Livro, estado:Estado, acervo:Acervo)
+    // VerificarDisponibilidade(codigoLivro:int): Livro
+    // VerificarHistoricoLivro(idLivro:int)
+
+    // Charles:
+    // SolicitarLivro(idLivro:int)
+    // RegistrarListaDeEspera(idLivro:int, usuario:Usuario)
+    // AutorizarEmprestimo(): Emprestimo
+    // DevolverLivro()
+    // ReservarLivro(): Emprestimo
+    // CancelarReserva(codigoAcesso:string, codigoLivro:int)
+
 }
