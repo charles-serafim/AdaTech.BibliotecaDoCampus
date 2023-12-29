@@ -11,36 +11,51 @@ namespace Usuarios
         int matricula;
         public override void CancelarReserva(int idEmprestimo)
         {
-            throw new NotImplementedException();
+            this.ListarReservas().Find(x => x.idEmprestimo == idEmprestimo).estadoEmprestimo = EstadoEmprestimo.Cancelado;
+
         }
 
-        public override void DevolverLivro(int idEmprestimo)
+        public override void DevolverLivro(int idEmprestimo, DateTime dataDevolucao)
         {
-            throw new NotImplementedException();
+            Emprestimo emprestimo = Emprestimo.Find(x => x.idEmprestimo == idEmprestimo);
+            if(emprestimo.dataLimite > dataDevolucao)
+            {
+                emprestimo.estadoEmprestimo = EstadoEmprestimo.Finalizado;
+            }
+            else
+            {
+                emprestimo.estadoEmprestimo = EstadoEmprestimo.FinalizadoComMulta;
+                this.multaTotal += SistemaBiblioteca.CalcularMulta(emprestimo.dataLimite, dataDevolucao);
+            }
         }
 
-        public override void ExibirHistorico(List<Emprestimo> emprestimos)
+        public override List<Emprestimo> ExibirHistorico(List<Emprestimo> emprestimos)
         {
-            throw new NotImplementedException();
+            return emprestimos=emprestimos.FindAll(x => x.idUsuario == this.matricula);
         }
 
-        public override void ListarReservas(List<Emprestimo> reservas)
+        public override List<Emprestimo> ListarReservas(List<Emprestimo> reservas)
         {
-            throw new NotImplementedException();
+            return reservas = reservas.FindAll(x => x.idUsuario == this.matricula);
         }
 
         public override int LocalizarReserva(string? nomeLivro, int? idLivro)
         {
-            throw new NotImplementedException();
+            return ControleDeReservas.Consultar(string? nomeLivro int? idLivro);
         }
 
-        public override void VerificarDisponibilidade()
+        public override bool VerificarDisponibilidade(Livro livro)
         {
-            throw new NotImplementedException();
+            return livro.estadoLivro == EstadoLivro.Disponivel;
         }
         public void SolicitarLivro(int idLivro)
         {
-            throw new NotImplementedException();
+            Livro livro = Livro.Consultar(idLivro);
+            if (livro.estadoLivro == EstadoLivro.Disponivel)
+            {
+                livro.estadoLivro = EstadoLivro.AguardandoAprovacao;
+                livro.requerente = this.matricula;
+            }
         }
     }
 }

@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Usuarios.Funcionarios
 {
-    internal class Funcionario : Usuario
+    public class Funcionario : Usuario
     {
         string codigoDeAcesso;
         string senha;
+        public string nome;
+        private NivelAcesso acesso;
+
         public override void CancelarReserva(int idEmprestimo)
         {
             throw new NotImplementedException();
