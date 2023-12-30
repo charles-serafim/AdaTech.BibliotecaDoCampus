@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaGerenciamento;
+namespace SistemaGerenciamento.Models;
 
 public enum Acervo
 {

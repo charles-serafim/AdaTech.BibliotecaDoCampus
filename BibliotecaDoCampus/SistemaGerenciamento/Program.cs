@@ -1,4 +1,6 @@
-﻿namespace SistemaGerenciamento;
+﻿using SistemaGerenciamento.Models;
+
+namespace SistemaGerenciamento;
 
 internal class Program
 {
