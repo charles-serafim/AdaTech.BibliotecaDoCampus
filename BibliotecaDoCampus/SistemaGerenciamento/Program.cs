@@ -34,7 +34,7 @@ internal class Program
                               "0 - Sair\n" +
                               "Digite uma opção ou 0 para sair: ");
 
-            option = int.Parse(Console.ReadLine());
+            option = Utils.ReadOption(0, 4);
 
             switch(option)
             {
@@ -42,6 +42,7 @@ internal class Program
                     repeat = false;
                     Console.Clear();
                     Console.WriteLine("Saindo...\n");
+                    Utils.GoOn();
                     break;
 
                 case 1:
@@ -77,8 +78,7 @@ internal class Program
         {
             usuario.MostrarDados();
         }
-        Console.WriteLine("Continuar...");
-        Console.ReadLine();
+        Utils.GoOn();
     }
 
     static void MostrarLivros()
@@ -87,8 +87,7 @@ internal class Program
         {
             livro.MostrarDados();
         }
-        Console.WriteLine("Continuar...");
-        Console.ReadLine();
+        Utils.GoOn();
     }
 
     static void CadastrarUsuario()
@@ -181,4 +180,57 @@ internal class Program
     // ReservarLivro(): Emprestimo
     // CancelarReserva(codigoAcesso:string, codigoLivro:int)
 
+}
+
+internal class Utils
+{
+    public static void GoOn(string question = null)
+    {
+        Console.WriteLine();
+        Console.WriteLine(question == null ? "Aperte qualquer tecla para continuar..." : $"{question}");
+        Console.ReadLine();
+        Console.Clear();
+    }
+
+    public static bool ReadYesOrNo(string question)
+    {
+        Console.WriteLine();
+        Console.WriteLine($"{question}? (s/n)");
+
+        while (true)
+        {
+            string input = Console.ReadLine()?.ToLower();
+
+            if (Regex.IsMatch(input, "^(s(im)?|n(ao|ão)|n(ao)?o?)$")) return input.StartsWith("s");
+
+            Console.WriteLine("Entrada inválida.");
+            Console.WriteLine($"{question} ? (s / n)");
+            Console.WriteLine();
+        }
+    }
+
+    public static int ReadOption(int min, int max)
+    {
+        bool valid = false;
+        int number = 0;
+
+        while (!valid)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Digite uma opção: ");
+            string input = Console.ReadLine();
+
+            if (int.TryParse(input, out number))
+            {
+                if (number >= min && number <= max) valid = true;
+                else
+                {
+                    Console.WriteLine($"Digite um número entre {min} e {max}");
+                }
+            }
+            else Console.WriteLine("Digite um número válido");
+        }
+
+        return number;
+    }
 }
