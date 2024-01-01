@@ -1,4 +1,25 @@
-﻿using SistemaGerenciamento.Models;
+﻿// Luana:
+// ListarLivros(): List<Livro>
+// ListarLivrosPorSetor(setor:string) :List<Livro>
+// ListarLivrosDisponiveis(): List<Livro>
+// ListarLivrosEmprestados(): List<Livro>
+
+// Monalisa:
+// AutenticarUsuario(codigoAcesso:string, nivelAcesso:NivelAcesso, senha:string) : Usuario
+// Inicializar()
+// AtualizarExemplar(livro:Livro, estado:Estado, acervo:Acervo)
+// VerificarDisponibilidade(codigoLivro:int): Livro
+// VerificarHistoricoLivro(idLivro:int)
+
+// Charles:
+// SolicitarLivro(idLivro:int)
+// RegistrarListaDeEspera(idLivro:int, usuario:Usuario)
+// AutorizarEmprestimo(): Emprestimo
+// DevolverLivro() // 
+// ReservarLivro(): Emprestimo
+// CancelarReserva(codigoAcesso:string, codigoLivro:int)
+
+using SistemaGerenciamento.Models;
 
 namespace SistemaGerenciamento;
 
@@ -20,19 +41,24 @@ internal class Program
             new Livro( "Cem anos de solidão", "Gabriel García Márquez", 129, Acervo.ForaDeEstoque, EstadoLivro.Perdido )
         };
 
+    static List<Reserva> listaDeEspera = new List<Reserva>();
+    static List<Emprestimo> historico = new List<Emprestimo>();
+
     static void Main(string[] args)
     {
         Console.WriteLine("Sistema de Biblioteca do Campus");
         int option;
+        bool mainLoop = true;
         bool repeat = true;
 
-        while(repeat)
+        while(mainLoop)
         {
             Console.Clear();
             Console.WriteLine("1 - Cadastrar usuário\n" +
                               "2 - Listar usuários\n" +
                               "3 - Cadastrar livro\n" +
                               "4 - Listar livros\n" +
+                              "5 - Devolver um livro\n" +
                               "0 - Sair\n" +
                               "Digite uma opção ou 0 para sair: ");
 
@@ -41,7 +67,7 @@ internal class Program
             switch(option)
             {
                 case 0:
-                    repeat = false;
+                    mainLoop = false;
                     Console.Clear();
                     Console.WriteLine("Saindo...\n");
                     Utils.GoOn();
@@ -54,7 +80,7 @@ internal class Program
 
                 case 2:
                     Console.Clear();
-                    MostrarUsuarios();
+                    MostrarDados(listaDeUsuarios);
                     break;
 
                 case 3:
@@ -64,7 +90,33 @@ internal class Program
 
                 case 4:
                     Console.Clear();
-                    MostrarLivros();
+                    MostrarDados(listaDeLivros);
+                    break;
+
+                case 5:
+                    while (repeat)
+                    {
+                        Console.Clear();
+                        Usuario cliente = LocalizarUsuario();
+                        if (cliente == null)
+                        {
+                            Console.WriteLine("Usuário não localizado.");
+                            repeat = Utils.ReadYesOrNo("Realizar nova busca");
+                            continue;
+                        }
+                        while (repeat)
+                        {
+                            Emprestimo emprestimoLocalizado = LocalizarEmprestimo(cliente);
+                            if (emprestimoLocalizado == null)
+                            {
+                                Console.WriteLine("Usuário não localizado.");
+                                repeat = Utils.ReadYesOrNo("Realizar nova busca");
+                                continue;
+                            }
+                            DevolverLivro(emprestimoLocalizado);
+                        }
+                    }
+                    
                     break;
 
                 default:
@@ -74,20 +126,12 @@ internal class Program
         }        
     }
 
-    static void MostrarUsuarios()
+    static void MostrarDados<T>(List<T> listaDeElementos)
     {
-        foreach (var usuario in listaDeUsuarios)
+        foreach (var elemento in listaDeElementos)
         {
-            usuario.MostrarDados();
-        }
-        Utils.GoOn();
-    }
-
-    static void MostrarLivros()
-    {
-        foreach (var livro in listaDeLivros)
-        {
-            livro.MostrarDados();
+            dynamic objeto = elemento;
+            objeto.MostrarDados();
         }
         Utils.GoOn();
     }
@@ -159,80 +203,55 @@ internal class Program
         listaDeLivros.Add(novoLivro);
     }
 
-
-    // Luana:
-    // ListarLivros(): List<Livro>
-    // ListarLivrosPorSetor(setor:string) :List<Livro>
-    // ListarLivrosDisponiveis(): List<Livro>
-    // ListarLivrosEmprestados(): List<Livro>
-
-
-    // Monalisa:
-    // AutenticarUsuario(codigoAcesso:string, nivelAcesso:NivelAcesso, senha:string) : Usuario
-    // Inicializar()
-    // AtualizarExemplar(livro:Livro, estado:Estado, acervo:Acervo)
-    // VerificarDisponibilidade(codigoLivro:int): Livro
-    // VerificarHistoricoLivro(idLivro:int)
-
-    // Charles:
-    // SolicitarLivro(idLivro:int)
-    // RegistrarListaDeEspera(idLivro:int, usuario:Usuario)
-    // AutorizarEmprestimo(): Emprestimo
-    // DevolverLivro()
-    // ReservarLivro(): Emprestimo
-    // CancelarReserva(codigoAcesso:string, codigoLivro:int)
-
-}
-
-internal class Utils
-{
-    public static void GoOn(string question = null)
+    static void DevolverLivro(Emprestimo emprestimo)
     {
-        Console.WriteLine();
-        Console.WriteLine(question == null ? "Aperte qualquer tecla para continuar..." : $"{question}");
-        Console.ReadLine();
-        Console.Clear();
+        DateTime dataDevolucao = DateTime.Today;
+        
     }
 
-    public static bool ReadYesOrNo(string question)
+    static Usuario LocalizarUsuario()
     {
-        Console.WriteLine();
-        Console.WriteLine($"{question}? (s/n)");
-
+        string nome;
+        int idUsuario;
+        Usuario usuarioLocalizado;
         while (true)
         {
-            string input = Console.ReadLine()?.ToLower();
+            Console.Clear();
+            Console.WriteLine("Digite o nome ou o ID do usuário: ");
+            nome = Console.ReadLine();
+            
+            if(int.TryParse(nome, out idUsuario))
+            {
+                usuarioLocalizado = listaDeUsuarios.FirstOrDefault(u => u.IdUsuario == idUsuario);
+                return usuarioLocalizado;
+            }
 
-            if (Regex.IsMatch(input, "^(s(im)?|n(ao|ão)|n(ao)?o?)$")) return input.StartsWith("s");
-
-            Console.WriteLine("Entrada inválida.");
-            Console.WriteLine($"{question} ? (s / n)");
-            Console.WriteLine();
+            usuarioLocalizado = listaDeUsuarios.FirstOrDefault(u => u._nome == nome);
         }
+        return usuarioLocalizado;
     }
 
-    public static int ReadOption(int min, int max)
+    static Emprestimo LocalizarEmprestimo(Usuario usuario)
     {
-        bool valid = false;
-        int number = 0;
-
-        while (!valid)
+        string tituloLivro;
+        int idEmprestimo;
+        Emprestimo emprestimoLocalizado;
+        while (true)
         {
-            Console.WriteLine();
-            Console.WriteLine("Digite uma opção: ");
-            string input = Console.ReadLine();
+            Console.Clear();
+            Console.WriteLine("Digite o título do livro ou o ID do empréstimo: ");
+            tituloLivro = Console.ReadLine();
 
-            if (int.TryParse(input, out number))
+            if (int.TryParse(tituloLivro, out idEmprestimo))
             {
-                if (number >= min && number <= max) valid = true;
-                else
-                {
-                    Console.WriteLine($"Digite um número entre {min} e {max}");
-                }
+                emprestimoLocalizado = historico.FirstOrDefault(e => e._idUsuario == usuario.IdUsuario && e.IdReserva == idEmprestimo);
+                return emprestimoLocalizado;
             }
-            else Console.WriteLine("Digite um número válido");
-        }
 
-        return number;
+            // guardar Livro em uma outra variavel pra procurar na lista de livros
+
+            emprestimoLocalizado = historico.FirstOrDefault(e => e._idUsuario == usuario.IdUsuario  && true);
+        }
+        return emprestimoLocalizado;
     }
 }
