@@ -8,22 +8,17 @@ namespace Usuarios.Funcionarios
 {
     public class Funcionario : Usuario
     {
-        string codigoDeAcesso;
-        string senha;
+        public string codigoDeAcesso;
+        public string senha;
         public string nome;
-        private NivelAcesso acesso;
+        public NivelAcesso acesso;
 
-        public override void CancelarReserva(int idEmprestimo)
+        public override bool VerificarDisponibilidade(Livro livro)
         {
             throw new NotImplementedException();
         }
 
-        public override void DevolverLivro(int idEmprestimo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void ExibirHistorico(List<Emprestimo> emprestimos)
+        public override List<Emprestimo> ExibirHistorico(List<Emprestimo> emprestimos)
         {
             throw new NotImplementedException();
         }
@@ -38,22 +33,12 @@ namespace Usuarios.Funcionarios
             throw new NotImplementedException();
         }
 
-        public override void VerificarDisponibilidade()
+        public override void CancelarReserva(int idEmprestimo)
         {
             throw new NotImplementedException();
         }
 
-        public void ReservarLivro(Usuario usuario, Livro livro, DateTime dataInicio, DateTime dataFim)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AtualizarExemplar(Livro livro, EstadoLivro estadoLivro, Acervo acervo)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CadastrarLivro(Livro livro, Acervo acervo)
+        public override void DevolverLivro(int idEmprestimo, DateTime dataDevolucao)
         {
             throw new NotImplementedException();
         }

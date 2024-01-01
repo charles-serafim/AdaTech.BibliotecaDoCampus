@@ -11,6 +11,11 @@ namespace Usuarios
         int idProfessor;
         string codigoDeAcesso;
         string senha;
+
+        public Professor()
+        {
+            this.nivelAcesso = NivelAcesso.Professor;
+        }
         public override void CancelarReserva(int idEmprestimo)
         {
             throw new NotImplementedException();

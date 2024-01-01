@@ -10,9 +10,21 @@ namespace Usuarios.Funcionarios
     {
         int idDiretor;
 
-        public Funcionario CadastrarFuncionario(string nome, NivelAcesso acesso, string? codigoDeAcesso, string? senha)
+        public Diretor()
         {
-            throw new NotImplementedException();
+            this.nivelAcesso = NivelAcesso.Diretor;
+        }
+        public Atendente CadastrarFuncionario(string nome, int idAtendente, NivelAcesso acesso, string? codigoDeAcesso, string? senha)
+        {
+            Atendente a = new Atendente();
+            a.nome = nome;
+            a.idAtendente = idAtendente;
+            a.nivelAcesso = acesso;
+            a.codigoDeAcesso = codigoDeAcesso;
+            a.senha = senha;
+
+
+            return a;
         }
     }
 }

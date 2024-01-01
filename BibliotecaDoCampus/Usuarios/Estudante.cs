@@ -9,6 +9,10 @@ namespace Usuarios
     internal class Estudante : Usuario
     {
         int matricula;
+        public Estudante()
+        {
+            this.nivelAcesso = NivelAcesso.Estudante;
+        }
         public override void CancelarReserva(int idEmprestimo)
         {
             this.ListarReservas().Find(x => x.idEmprestimo == idEmprestimo).estadoEmprestimo = EstadoEmprestimo.Cancelado;
