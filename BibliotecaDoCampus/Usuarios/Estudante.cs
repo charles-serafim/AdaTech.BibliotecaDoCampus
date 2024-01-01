@@ -45,7 +45,7 @@ namespace Usuarios
 
         public override int LocalizarReserva(string? nomeLivro, int? idLivro)
         {
-            return ControleDeReservas.Consultar(string? nomeLivro int? idLivro);
+            return ControleDeReservas.Consultar(nomeLivro, idLivro);
         }
 
         public override bool VerificarDisponibilidade(Livro livro)

@@ -20,7 +20,22 @@ namespace Usuarios.Funcionarios
 
         public void AutorizarEmprestimo(Livro livro, Usuario usuario, int? idReserva = 0)
         {
-            throw new NotImplementedException();
+           if (livro.estadoLivro == EstadoLivro.AguardandoAprovacao)
+            {
+                livro.estadoLivro = EstadoLivro.Indisponivel;
+                Emprestimo emprestimo = new Emprestimo();
+                emprestimo.idEmprestimo = Emprestimo.GerarId();
+                emprestimo.idLivro = livro.idLivro;
+                emprestimo.idUsuario = usuario.codigoDeAcesso;
+                emprestimo.dataEmprestimo = DateTime.Now;
+                emprestimo.dataLimite = DateTime.Now.AddDays(7);
+                emprestimo.estadoEmprestimo = EstadoEmprestimo.AguardandoDevolucao;
+                Emprestimo.Add(emprestimo);
+                if (idReserva != 0)
+                {
+                    ControleDeReservas.CancelarReserva((int)idReserva);
+                }
+            }
         }
     }
 }
