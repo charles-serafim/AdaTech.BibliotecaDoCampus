@@ -12,14 +12,13 @@
 // VerificarHistoricoLivro(idLivro:int)
 
 // Charles:
-// SolicitarLivro(idLivro:int, usuario:Usuario): Reserva
-// AutorizarEmprestimo(Reserva reserva): Emprestimo
-// ReservarLivro(): Emprestimo
-// CancelarReserva(codigoAcesso:string, codigoLivro:int)
-
+// AutorizarEmprestimo(Reserva reserva): // EmprestarLivro()
 
 // Concluído:
-// DevolverLivro() // 
+// DevolverLivro()
+// SolicitarLivro()
+// ReservarLivro()
+// CancelarReserva()
 
 using SistemaGerenciamento.Models;
 
@@ -63,6 +62,9 @@ internal class Program
                               "4 - Listar livros\n" +
                               "5 - Devolver um livro\n" +
                               "6 - Solicitar livro\n" +
+                              "7 - Cancelar reserva\n" +
+                              "8 - Consultar reservas\n" +
+                              "9 - Emprestar livro\n" +
                               "0 - Sair\n" +
                               "Digite uma opção ou 0 para sair: ");
 
@@ -103,7 +105,23 @@ internal class Program
                     break;
 
                 case 6:
+                    Console.Clear();
                     SolicitarLivro();
+                    break;
+
+                case 7:
+                    Console.Clear();
+                    CancelarReserva();
+                    break;
+
+                case 8:
+                    Console.Clear();
+                    ConsultarReservas();
+                    break;
+
+                case 9:
+                    Console.Clear();
+                    EmprestarLivro();
                     break;
 
                 default:
@@ -286,6 +304,73 @@ internal class Program
                 Console.WriteLine("Datas inválidas. Digite novas datas, por favor.");
             }
         }
+    }
+
+    static void CancelarReserva()
+    {
+        Usuario usuarioDaReserva = LocalizarUsuario();
+        Reserva reservaACancelar;
+        int idReserva;
+        var reservasDoUsuario = listaDeEspera.Where(reserva => reserva._idUsuario== usuarioDaReserva.IdUsuario).ToList();
+
+        if(reservasDoUsuario == null)
+        {
+            Console.WriteLine("Não há reservas registradas para o usuário informado.");
+            return;
+        }
+
+        while(true)
+        {
+            Console.Clear();
+            foreach (var reserva in reservasDoUsuario) reserva.MostrarDados(listaDeUsuarios, listaDeLivros);
+            if (int.TryParse(Console.ReadLine(), out idReserva))
+            {
+                reservaACancelar = reservasDoUsuario.FirstOrDefault(reserva => reserva.IdReserva == idReserva);
+                if(reservaACancelar != null)
+                {
+                    reservasDoUsuario.Remove(reservaACancelar);
+                    Console.WriteLine("Reserva cancelada com sucesso!");
+                    return;
+                }
+            }
+            Console.WriteLine("Por favor, forneça o número de uma das reservas listadas.");
+        }
+    }
+
+    static void ConsultarReservas()
+    {
+        Usuario usuarioDaReserva = LocalizarUsuario();
+        var reservasDoUsuario = listaDeEspera.Where(reserva => reserva._idUsuario == usuarioDaReserva.IdUsuario).ToList();
+
+        if (reservasDoUsuario == null)
+        {
+            Console.WriteLine("Não há reservas registradas para o usuário informado.");
+            return;
+        }
+
+        foreach (var reserva in reservasDoUsuario) reserva.MostrarDados(listaDeUsuarios, listaDeLivros);
+    }
+
+    static void EmprestarLivro()
+    {
+        //Console.Clear();
+        //Console.WriteLine("1 - Com reserva" +
+        //                  "2 - Sem reserva");
+        //int opcaoEmprestimo = Utils.ReadOption(1, 2);
+
+        //switch(opcaoEmprestimo)
+        //{
+        //    case 1:
+        //        Usuario usuarioDoEmprestimo = LocalizarUsuario();
+        //        var reservasDoUsuario = listaDeEspera.Where(reserva => reserva._idUsuario == usuarioDoEmprestimo.IdUsuario && reserva._dataInicio.Date == DateTime.Today).ToList();
+        //        break;
+
+        //    case 2:
+        //        break;
+
+        //    default:
+        //        break;
+        //}
     }
 
     static void DevolverLivro()
