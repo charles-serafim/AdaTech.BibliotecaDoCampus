@@ -35,4 +35,9 @@ public class Livro
                         + $"Condição: {_estadoLivro}\n"
                         + $"Acervo: {_acervo}\n");
     }
+
+    public void DevolverLivro(EstadoLivro novoEstadoLivro)
+    {
+        this._estadoLivro = novoEstadoLivro;
+    }
 }

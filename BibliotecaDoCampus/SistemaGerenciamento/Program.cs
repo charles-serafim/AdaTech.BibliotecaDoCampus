@@ -42,6 +42,7 @@ internal class Program
         };
 
     static List<Reserva> listaDeEspera = new List<Reserva>();
+
     static List<Emprestimo> historico = new List<Emprestimo>();
 
     static void Main(string[] args)
@@ -59,6 +60,7 @@ internal class Program
                               "3 - Cadastrar livro\n" +
                               "4 - Listar livros\n" +
                               "5 - Devolver um livro\n" +
+                              "6 - Solicitar livro\n" +
                               "0 - Sair\n" +
                               "Digite uma opção ou 0 para sair: ");
 
@@ -207,6 +209,24 @@ internal class Program
     {
         DateTime dataDevolucao = DateTime.Today;
         
+        EstadoLivro novoEstadoLivro;
+
+        while (true)
+        {
+            Console.WriteLine("Digite o novo estado do livro (Disponível, Reservado, Emprestado, Danificado, Perdido):");
+            string inputEstadoLivro = Console.ReadLine();
+
+            if (Enum.TryParse(inputEstadoLivro, out novoEstadoLivro)) break;
+            else Console.WriteLine("Estado do livro inválido. Certifique-se de digitar um valor válido.");
+        }
+
+        Livro livroDevolvido = listaDeLivros.Find(livro => livro.IdLivro == emprestimo._idLivro);
+        Usuario usuarioDevolucao = listaDeUsuarios.Find(usuario => usuario.IdUsuario == emprestimo._idUsuario);
+
+        livroDevolvido.DevolverLivro(novoEstadoLivro);
+        emprestimo.DevolverLivro(dataDevolucao, usuarioDevolucao);
+
+        Console.WriteLine("Livro devolvido com sucesso!");
     }
 
     static Usuario LocalizarUsuario()
