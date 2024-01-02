@@ -12,12 +12,14 @@
 // VerificarHistoricoLivro(idLivro:int)
 
 // Charles:
-// SolicitarLivro(idLivro:int)
-// RegistrarListaDeEspera(idLivro:int, usuario:Usuario)
-// AutorizarEmprestimo(): Emprestimo
-// DevolverLivro() // 
+// SolicitarLivro(idLivro:int, usuario:Usuario): Reserva
+// AutorizarEmprestimo(Reserva reserva): Emprestimo
 // ReservarLivro(): Emprestimo
 // CancelarReserva(codigoAcesso:string, codigoLivro:int)
+
+
+// Concluído:
+// DevolverLivro() // 
 
 using SistemaGerenciamento.Models;
 
@@ -96,29 +98,12 @@ internal class Program
                     break;
 
                 case 5:
-                    while (repeat)
-                    {
-                        Console.Clear();
-                        Usuario cliente = LocalizarUsuario();
-                        if (cliente == null)
-                        {
-                            Console.WriteLine("Usuário não localizado.");
-                            repeat = Utils.ReadYesOrNo("Realizar nova busca");
-                            continue;
-                        }
-                        while (repeat)
-                        {
-                            Emprestimo emprestimoLocalizado = LocalizarEmprestimo(cliente);
-                            if (emprestimoLocalizado == null)
-                            {
-                                Console.WriteLine("Usuário não localizado.");
-                                repeat = Utils.ReadYesOrNo("Realizar nova busca");
-                                continue;
-                            }
-                            DevolverLivro(emprestimoLocalizado);
-                        }
-                    }
-                    
+                    Console.Clear();
+                    DevolverLivro();
+                    break;
+
+                case 6:
+                    SolicitarLivro();
                     break;
 
                 default:
@@ -205,28 +190,158 @@ internal class Program
         listaDeLivros.Add(novoLivro);
     }
 
-    static void DevolverLivro(Emprestimo emprestimo)
+    static void SolicitarLivro()
     {
-        DateTime dataDevolucao = DateTime.Today;
-        
-        EstadoLivro novoEstadoLivro;
+        Livro livroEscolhido;
+        List<Livro> exemplaresDoLivro = new List<Livro>();
+        string titulo;
+        bool repeat = true;
+        bool realizarReserva;
 
-        while (true)
+        // localiza todos os exemplares do livro
+        while (repeat)
         {
-            Console.WriteLine("Digite o novo estado do livro (Disponível, Reservado, Emprestado, Danificado, Perdido):");
-            string inputEstadoLivro = Console.ReadLine();
+            Console.WriteLine("Digite o título do livro: ");
+            titulo = Console.ReadLine();
+            
+            foreach(var livro in listaDeLivros)
+            {
+                if(livro._titulo.Contains(titulo)) exemplaresDoLivro.Add(livro);
+            }
 
-            if (Enum.TryParse(inputEstadoLivro, out novoEstadoLivro)) break;
-            else Console.WriteLine("Estado do livro inválido. Certifique-se de digitar um valor válido.");
+            if(listaDeLivros == null)
+            {
+                Console.WriteLine("Livro não localizado no acervo.");
+                repeat = Utils.ReadYesOrNo("Tentar novamente");
+            }
+            else break;
         }
 
-        Livro livroDevolvido = listaDeLivros.Find(livro => livro.IdLivro == emprestimo._idLivro);
-        Usuario usuarioDevolucao = listaDeUsuarios.Find(usuario => usuario.IdUsuario == emprestimo._idUsuario);
+        // exibe as reservas para cada livro
+        while (repeat)
+        {
+            Console.WriteLine($"Exemplares localizados: {exemplaresDoLivro.Count()}");
+            int i = 1;
+            foreach(var livro in exemplaresDoLivro)
+            {
+                Console.WriteLine($"Reservas para o exemplar {i++}");
+                var reservasDoLivro = listaDeEspera.Where(reserva => reserva._idLivro == livro.IdLivro).ToList();
+                if (reservasDoLivro.Any())
+                {
+                    foreach (var reserva in reservasDoLivro) reserva.MostrarDados(listaDeUsuarios, listaDeLivros);
+                }
+                else Console.WriteLine("Não há reservas agendadas para este exemplar.");
 
-        livroDevolvido.DevolverLivro(novoEstadoLivro);
-        emprestimo.DevolverLivro(dataDevolucao, usuarioDevolucao);
+                if (livro._estadoLivro == EstadoLivro.Disponível)
+                {
+                    realizarReserva = Utils.ReadYesOrNo("Realizar reserva");
+                    if (realizarReserva) ReservarLivro(livro, reservasDoLivro);
+                    else break;
+                }
+                else
+                {
+                    Console.WriteLine("Exemplar indisponível no momento.");
+                    Utils.GoOn();
+                }
+            }
+        }
+    }
 
-        Console.WriteLine("Livro devolvido com sucesso!");
+    static void ReservarLivro(Livro livro, List<Reserva> reservasDoLivro)
+    {
+        bool reservaCompativel = false;
+        Reserva novaReserva;
+        DateTime dataInicio, dataFim;
+
+        Usuario usuarioDaReserva = LocalizarUsuario();
+
+        // recebe um periodo valido para a reserva
+        while (true)
+        {
+            Console.Clear();
+            foreach (var reserva in reservasDoLivro) reserva.MostrarDados(listaDeUsuarios, listaDeLivros);
+            dataInicio = Utils.ReadDateTime();
+            dataFim = Utils.ReadDateTime();
+
+            if (dataInicio >= dataFim) reservaCompativel = false;
+
+            foreach (var reserva in reservasDoLivro)
+            {
+                if (dataInicio >= reserva._dataInicio && dataInicio <= reserva._dataFim) reservaCompativel = false;
+                if (dataFim >= reserva._dataInicio && dataFim <= reserva._dataFim) reservaCompativel = false;
+                if (dataInicio <= reserva._dataInicio && dataFim >= reserva._dataFim) reservaCompativel = false;
+            }
+
+            if (reservaCompativel)
+            {
+                novaReserva = new Reserva(usuarioDaReserva.IdUsuario, livro.IdLivro, dataInicio, dataFim);
+                listaDeEspera.Add(novaReserva);
+                Console.WriteLine("Livro reservado com sucesso!");
+                Utils.GoOn();
+                novaReserva.MostrarDados(listaDeUsuarios, listaDeLivros);
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Datas inválidas. Digite novas datas, por favor.");
+            }
+        }
+    }
+
+    static void DevolverLivro()
+    {
+        bool repeat = true;
+        int sair;
+        while (repeat)
+        {
+            Console.Clear();
+            Usuario cliente = LocalizarUsuario();
+            if (cliente == null)
+            {
+                Console.WriteLine("Usuário não localizado.");
+                repeat = Utils.ReadYesOrNo("Realizar nova busca");
+                continue;
+            }
+            while (repeat)
+            {
+                Emprestimo emprestimoLocalizado = LocalizarEmprestimo(cliente);
+                if (emprestimoLocalizado == null)
+                {
+                    Console.WriteLine("Usuário não localizado.");
+                    repeat = Utils.ReadYesOrNo("Realizar nova busca");
+                    continue;
+                }
+                
+                DateTime dataDevolucao = DateTime.Today;
+
+                EstadoLivro novoEstadoLivro;
+
+                while (repeat)
+                {
+                    Console.WriteLine("Digite o novo estado do livro (Disponível, Reservado, Emprestado, Danificado, Perdido) ou 0 para sair:");
+                    string inputEstadoLivro = Console.ReadLine();
+
+                    if (int.TryParse(inputEstadoLivro, out sair))
+                    {
+                        repeat = false;
+                        break;
+                    }
+
+                    if (Enum.TryParse(inputEstadoLivro, out novoEstadoLivro))
+                    {
+                        Livro livroDevolvido = listaDeLivros.Find(livro => livro.IdLivro == emprestimoLocalizado._idLivro);
+                        Usuario usuarioDevolucao = listaDeUsuarios.Find(usuario => usuario.IdUsuario == emprestimoLocalizado._idUsuario);
+
+                        livroDevolvido.DevolverLivro(novoEstadoLivro);
+                        emprestimoLocalizado.DevolverLivro(dataDevolucao, usuarioDevolucao);
+
+                        Console.WriteLine("Livro devolvido com sucesso!");
+                        break;
+                    }
+                    else Console.WriteLine("Estado do livro inválido. Certifique-se de digitar um valor válido ou 0 para sair.");
+                }
+            }
+        }
     }
 
     static Usuario LocalizarUsuario()
@@ -249,6 +364,28 @@ internal class Program
             usuarioLocalizado = listaDeUsuarios.FirstOrDefault(u => u._nome == nome);
         }
         return usuarioLocalizado;
+    }
+
+    static Livro LocalizarLivro()
+    {
+        string titulo;
+        int idLivro;
+        Livro livroLocalizado;
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Digite o título ou o ID do livro: ");
+            titulo = Console.ReadLine();
+
+            if (int.TryParse(titulo, out idLivro))
+            {
+                livroLocalizado = listaDeLivros.FirstOrDefault(livro => livro.IdLivro == idLivro);
+                return livroLocalizado;
+            }
+
+            livroLocalizado = listaDeLivros.FirstOrDefault(livro => livro._titulo.Contains(titulo));
+        }
+        return livroLocalizado;
     }
 
     static Emprestimo LocalizarEmprestimo(Usuario usuario)
