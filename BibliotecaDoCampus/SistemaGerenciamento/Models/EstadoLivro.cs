@@ -8,9 +8,9 @@ namespace SistemaGerenciamento.Models;
 
 public enum EstadoLivro
 {
-    Disponível,
-    Reservado,
-    Emprestado,
-    Danificado,
-    Perdido
+    Disponível = 1,
+    Reservado = 2,
+    Emprestado = 3,
+    Danificado = 4,
+    Perdido = 5
 }
