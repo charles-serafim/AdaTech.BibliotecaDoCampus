@@ -68,7 +68,7 @@ internal class Program
                               "0 - Sair\n" +
                               "Digite uma opção ou 0 para sair: ");
 
-            option = Utils.ReadOption(0, 4);
+            option = Utils.ReadOption(0, 9);
 
             switch(option)
             {
@@ -131,6 +131,11 @@ internal class Program
         }        
     }
 
+
+
+    /// <summary>
+    /// Invoca o método MostrarDados() para cada instância de uma lista de um tipo que o possua
+    /// </summary>
     static void MostrarDados<T>(List<T> listaDeElementos)
     {
         foreach (var elemento in listaDeElementos)
@@ -141,6 +146,9 @@ internal class Program
         Utils.GoOn();
     }
 
+    /// <summary>
+    /// Lê um cadastro do usuário e adiciona à lista de usuários armazenada em memória
+    /// </summary>
     static void CadastrarUsuario()
     {
         string nome, email;
@@ -150,7 +158,7 @@ internal class Program
         nome = Console.ReadLine();
         
         Console.WriteLine("\nE-mail: ");
-        email = Console.ReadLine();
+        email = Utils.ReadEmail();
 
         Console.WriteLine("\nNível de acesso:\n" +
                          $"{((int)NivelAcesso.Estudante)} - {NivelAcesso.Estudante}\n" +
@@ -168,6 +176,9 @@ internal class Program
         listaDeUsuarios.Add(novoUsuario);
     }
 
+    /// <summary>
+    /// Lê um livro do usuário e adiciona à lista de livros armazenada em memória
+    /// </summary>
     static void CadastrarLivro()
     {
         string titulo;
@@ -190,7 +201,10 @@ internal class Program
         }
 
         Console.WriteLine("\nAcervos:");
-        foreach(Acervo tipoAcervo in Enum.GetValues(typeof(Acervo))) Console.WriteLine($"{(int)tipoAcervo} - {tipoAcervo}");
+        foreach(Acervo tipoAcervo in Enum.GetValues(typeof(Acervo)))
+        {
+            Console.WriteLine($"{(int)tipoAcervo} - {tipoAcervo}");
+        }
         Console.WriteLine("Digite o código referente ao acervo: ");
         while (!Enum.TryParse(Console.ReadLine(), out acervo))
         {
@@ -198,7 +212,10 @@ internal class Program
         }
 
         Console.WriteLine("\nCondição do livro:");
-        foreach (EstadoLivro condicaoLivro in Enum.GetValues(typeof(EstadoLivro))) Console.WriteLine($"{(int)condicaoLivro} - {condicaoLivro}");
+        foreach (EstadoLivro condicaoLivro in Enum.GetValues(typeof(EstadoLivro)))
+        {
+            Console.WriteLine($"{(int)condicaoLivro} - {condicaoLivro}");
+        }
         Console.WriteLine("Digite o código referente à condição atual do livro: ");
         while (!Enum.TryParse(Console.ReadLine(), out estadoLivro))
         {
@@ -210,6 +227,9 @@ internal class Program
         listaDeLivros.Add(novoLivro);
     }
 
+    /// <summary>
+    /// Exibe reservas para os exemplares de um livro e chama o método ReservarLivro()
+    /// </summary>
     static void SolicitarLivro()
     {
         Livro livroEscolhido;
@@ -267,6 +287,9 @@ internal class Program
         }
     }
 
+    /// <summary>
+    /// Valida os dados da reserva e adiciona à lista de espera armazenada em memória
+    /// </summary>
     static void ReservarLivro(Livro livro, List<Reserva> reservasDoLivro)
     {
         bool reservaCompativel = false;
@@ -308,6 +331,9 @@ internal class Program
         }
     }
 
+    /// <summary>
+    /// Exibe as reservas do usuário e remove uma reserva da lista de espera armazenada em memória
+    /// </summary>
     static void CancelarReserva()
     {
         Usuario usuarioDaReserva = LocalizarUsuario();
@@ -339,6 +365,9 @@ internal class Program
         }
     }
 
+    /// <summary>
+    /// Exibe todas as reservas de um usuário da lista de espera armazenada em memória
+    /// </summary>
     static void ConsultarReservas()
     {
         Usuario usuarioDaReserva = LocalizarUsuario();
@@ -353,28 +382,9 @@ internal class Program
         foreach (var reserva in reservasDoUsuario) reserva.MostrarDados(listaDeUsuarios, listaDeLivros);
     }
 
-    static void EmprestarLivro()
-    {
-        //Console.Clear();
-        //Console.WriteLine("1 - Com reserva" +
-        //                  "2 - Sem reserva");
-        //int opcaoEmprestimo = Utils.ReadOption(1, 2);
-
-        //switch(opcaoEmprestimo)
-        //{
-        //    case 1:
-        //        Usuario usuarioDoEmprestimo = LocalizarUsuario();
-        //        var reservasDoUsuario = listaDeEspera.Where(reserva => reserva._idUsuario == usuarioDoEmprestimo.IdUsuario && reserva._dataInicio.Date == DateTime.Today).ToList();
-        //        break;
-
-        //    case 2:
-        //        break;
-
-        //    default:
-        //        break;
-        //}
-    }
-
+    /// <summary>
+    /// Localiza um emprestimo a encerrar e chama os metódos DevolverLivro() de livro e empréstimo
+    /// </summary>
     static void DevolverLivro()
     {
         bool repeat = true;
@@ -431,6 +441,9 @@ internal class Program
         }
     }
 
+    /// <summary>
+    /// Localiza um usuário através de idUsuario ou nome e retorna este usuário
+    /// </summary>
     static Usuario LocalizarUsuario()
     {
         string nome;
@@ -450,9 +463,11 @@ internal class Program
 
             usuarioLocalizado = listaDeUsuarios.FirstOrDefault(u => u._nome == nome);
         }
-        return usuarioLocalizado;
     }
 
+    /// <summary>
+    /// Localiza um livro através de idLivro ou titulo e retorna este livro
+    /// </summary>
     static Livro LocalizarLivro()
     {
         string titulo;
@@ -475,6 +490,9 @@ internal class Program
         return livroLocalizado;
     }
 
+    /// <summary>
+    /// Localiza um empréstimo através de idUsuario e idReserva e retorna este empréstimo
+    /// </summary>
     static Emprestimo LocalizarEmprestimo(Usuario usuario)
     {
         string tituloLivro;
@@ -496,6 +514,27 @@ internal class Program
 
             emprestimoLocalizado = historico.FirstOrDefault(e => e._idUsuario == usuario.IdUsuario  && true);
         }
-        return emprestimoLocalizado;
+    }
+
+    static void EmprestarLivro()
+    {
+        //Console.Clear();
+        //Console.WriteLine("1 - Com reserva" +
+        //                  "2 - Sem reserva");
+        //int opcaoEmprestimo = Utils.ReadOption(1, 2);
+
+        //switch(opcaoEmprestimo)
+        //{
+        //    case 1:
+        //        Usuario usuarioDoEmprestimo = LocalizarUsuario();
+        //        var reservasDoUsuario = listaDeEspera.Where(reserva => reserva._idUsuario == usuarioDoEmprestimo.IdUsuario && reserva._dataInicio.Date == DateTime.Today).ToList();
+        //        break;
+
+        //    case 2:
+        //        break;
+
+        //    default:
+        //        break;
+        //}
     }
 }

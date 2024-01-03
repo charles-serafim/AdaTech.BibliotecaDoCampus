@@ -60,6 +60,25 @@ public class Utils
         return number;
     }
 
+    public static string ReadEmail()
+    {
+        string email;
+        string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine ("Digite o seu e-mail: ");
+            email = Console.ReadLine();
+            if (Regex.IsMatch(email, pattern)) break;
+
+            Console.WriteLine("Formato inválido. Por favor, informar novamente. Exemplo: contato@ada.tech");
+            GoOn();
+        }
+
+        return email;
+    }
+
     public static DateTime ReadDateTime()
     {
         DateTime date;
