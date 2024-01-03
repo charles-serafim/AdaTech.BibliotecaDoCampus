@@ -35,11 +35,11 @@ internal class Program
 
     static List<Livro> listaDeLivros = new List<Livro>()
         {
-            new Livro( "Compiladores: Princípios, Técnicas e Ferramentas", "Alfred V. Aho, Monica S. Lam, Ravi Sethi, Jeffrey D. Ullman", 1, Acervo.AcervoRestrito, EstadoLivro.Disponível ),
-            new Livro( "O Hobbit", "J. R. R. Tolkien", 3, Acervo.AcervoPublico, EstadoLivro.Reservado ),
-            new Livro( "Domain-driven design: atacando as complexidades no coração do software", "Eric Evans", 3, Acervo.AcervoPublico, EstadoLivro.Emprestado ),
-            new Livro( "A Origem das Espécies", "Charles Darwin", 1, Acervo.ForaDeEstoque, EstadoLivro.Danificado ),
-            new Livro( "Cem anos de solidão", "Gabriel García Márquez", 129, Acervo.ForaDeEstoque, EstadoLivro.Perdido )
+            new Livro( "Compiladores: Princípios, Técnicas e Ferramentas", new string[] { "Alfred V. Aho", "Monica S. Lam", "Ravi Sethi", "Jeffrey D. Ullman" }, 1, Acervo.AcervoRestrito, EstadoLivro.Disponível ),
+            new Livro( "O Hobbit", new string[] { "J. R. R. Tolkien" }, 3, Acervo.AcervoPublico, EstadoLivro.Reservado ),
+            new Livro( "Domain-driven design: atacando as complexidades no coração do software", new string[] { "Eric Evans" }, 3, Acervo.AcervoPublico, EstadoLivro.Emprestado ),
+            new Livro( "A Origem das Espécies", new string[] { "Charles Darwin" }, 1, Acervo.ForaDeEstoque, EstadoLivro.Danificado ),
+            new Livro( "Cem anos de solidão", new string[] { "Gabriel García Márquez" }, 129, Acervo.ForaDeEstoque, EstadoLivro.Perdido )
         };
 
     static List<Reserva> listaDeEspera = new List<Reserva>();
@@ -170,7 +170,8 @@ internal class Program
 
     static void CadastrarLivro()
     {
-        string titulo, autores;
+        string titulo;
+        string[] autores;
         int edicao;
         Acervo acervo;
         EstadoLivro estadoLivro;
@@ -179,8 +180,9 @@ internal class Program
         titulo = Console.ReadLine();
 
         Console.WriteLine("\nAutor (separe os autores com vírgula): ");
-        autores = Console.ReadLine();
-        
+        string autoresInput = Console.ReadLine();
+        autores = autoresInput.Split(',');
+
         Console.WriteLine("\nEdição: ");
         while (!int.TryParse(Console.ReadLine(), out edicao))
         {
