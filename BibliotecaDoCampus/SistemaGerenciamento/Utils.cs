@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -57,5 +58,27 @@ public class Utils
         }
 
         return number;
+    }
+
+    public static DateTime ReadDateTime()
+    {
+        DateTime date;
+
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine("Digite uma data no formato dd/mm/yyyy:");
+                date = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                break;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Entrada inválida. Por favor, digite uma data válida no formato dd/mm/yyyy.");
+                Console.WriteLine();
+            }
+        }
+
+        return date;
     }
 }
