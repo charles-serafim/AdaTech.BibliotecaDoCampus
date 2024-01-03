@@ -5,10 +5,12 @@
 // ListarLivrosEmprestados(): List<Livro>
 
 // Monalisa:
-// AutenticarUsuario(codigoAcesso:string, nivelAcesso:NivelAcesso, senha:string) : Usuario
+// AutenticarUsuario(codigoAcesso:string, nivelAcesso:NivelAcesso, senha:string) : Usuario OK
+
 // Inicializar()
-// AtualizarExemplar(livro:Livro, estado:Estado, acervo:Acervo)
-// VerificarDisponibilidade(codigoLivro:int): Livro
+
+// AtualizarExemplar(livro:Livro, estado:Estado, acervo:Acervo) OK
+// VerificarDisponibilidade(codigoLivro:int): Livro -
 // VerificarHistoricoLivro(idLivro:int)
 
 // Charles:
@@ -287,5 +289,31 @@ internal class Program
         Livro._acervo = acervo;
 
         // MostrarDados(listaDeLivros).Save(livro) *conferir
+    }
+
+    static void VerificarDisponibilidades(int Idlivro, EstadoLivro estadoLivro, Acervo acervo)
+    {
+        Console.WriteLine("Qual o Id do livro a ser verificado a disponibilidade? ")
+            int idLivro = int.Parse(Console.ReadLine());
+        if (idLivro <= 0)
+        {
+            throw new Exception("IdLivro inválido!");
+        }
+
+        Livro livro = MostrarDados(listaDeLivros).FindById(idLivro);
+
+        if (livro == null)
+        {
+            throw new Exception("Livro não encontrado!");
+        }
+
+        if(livro._acervo == Acervo.AcervoPublico  && livro._estadoLivro == EstadoLivro.Disponível)
+        {
+            return "Livro Disponível!"
+        }
+        else
+        {
+            return "Livro Indisponível!"
+        }
     }
 }
