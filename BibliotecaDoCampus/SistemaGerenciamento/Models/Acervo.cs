@@ -10,11 +10,11 @@ namespace SistemaGerenciamento.Models;
 public enum Acervo
 {
     [Description("Acervo Restrito")]
-    AcervoRestrito = 0,
+    AcervoRestrito = 1,
 
     [Description("Acervo Público")]
-    AcervoPublico = 1,
+    AcervoPublico = 2,
 
     [Description("Fora de Estoque")]
-    ForaDeEstoque = 2
+    ForaDeEstoque = 3
 }
