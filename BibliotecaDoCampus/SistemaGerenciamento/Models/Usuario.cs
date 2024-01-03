@@ -12,7 +12,7 @@ public class Usuario
     public int IdUsuario { get; set; }
     public string _nome;
     public string _email;
-    public double _multa = 0;
+    public double _multaTotal = 0;
     public NivelAcesso _nivelAcesso;
 
     public Usuario(string nome, string email, NivelAcesso nivelAcesso)
@@ -20,7 +20,7 @@ public class Usuario
         IdUsuario = ++s_contadorUsuario;
         _nome = nome;
         _email = email;
-        _multa = 0;
+        _multaTotal = 0;
         _nivelAcesso = nivelAcesso;
     }
 
@@ -29,7 +29,7 @@ public class Usuario
         Console.WriteLine($"Id do usuário: {IdUsuario}\n"
                         + $"Nome: {_nome}\n"
                         + $"Email: {_email}\n"
-                        + $"Multa total: R$ {_multa:F2}\n"
+                        + $"Multa total: R$ {_multaTotal:F2}\n"
                         + $"Tipo do usuário: {_nivelAcesso}\n");
     }
 }
