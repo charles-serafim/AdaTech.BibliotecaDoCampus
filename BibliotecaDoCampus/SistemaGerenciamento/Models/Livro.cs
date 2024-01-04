@@ -14,6 +14,7 @@ public class Livro
     public string _titulo { get; set; }
     public string[] _autores { get; set; }
     public int _edicao { get; set; }
+    public List<Usuario> _filaDeEspera { get; set; }
     public Acervo _acervo { get; set; }
     public EstadoLivro _estadoLivro { get; set; }
 
