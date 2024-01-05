@@ -508,7 +508,7 @@ internal class ProgramOld
 
             if (int.TryParse(tituloLivro, out idEmprestimo))
             {
-                emprestimoLocalizado = historico.FirstOrDefault(e => e._idUsuario == usuario.IdUsuario && e.IdReserva == idEmprestimo);
+                emprestimoLocalizado = historico.FirstOrDefault(e => e._idUsuario == usuario.IdUsuario && e._idEmprestimo == idEmprestimo);
                 return emprestimoLocalizado;
             }
 
@@ -540,50 +540,50 @@ internal class ProgramOld
         //}
     }
 
-    static void AtualizarExemplar(Usuario usuario, int IdLivro, EstadoLivro estadoLivro, Acervo acervo) 
+    //static void AtualizarExemplar(Usuario usuario, int IdLivro, EstadoLivro estadoLivro, Acervo acervo) 
+    //{
+    //    Console.WriteLine("Informe o IdLivro do livro que deseja atualizar: ");
+    //    int idLivro = int.Parse(Console.ReadLine());
+
+    //    if (idLivro <= 0)
+    //    {
+    //        throw new Exception("IdLivro inválido!");
+    //    }
+
+    //    Console.WriteLine("Informe o estado do livro: ");
+    //    EstadoLivro estadoLivro = (EstadoLivro)Enum.Parse(typeof(EstadoLivro), Console.ReadLine());
+
+    //    if (!Enum.IsDefined(typeof(EstadoLivro), estadoLivro))
+    //    {
+    //        throw new Exception("Estado inválido!");
+    //    }
+
+    //    Console.WriteLine("Informe o tipo de acervo: ");
+    //    Acervo acervo = (Acervo)Enum.Parse(typeof(Acervo), Console.ReadLine());
+
+    //    if (!Enum.IsDefined(typeof(Acervo), acervo))
+    //    {
+    //        throw new Exception("Acervo inválido!");
+    //    }
+
+    //    //Livro livro = MostrarDados(listaDeLivros).FindById(IdLivro); *conferir
+
+    //    Livro._estadoLivro = estadoLivro;
+    //    Livro._acervo = acervo;
+
+    //    // MostrarDados(listaDeLivros).Save(livro) *conferir
+    //}
+
+    static string VerificarDisponibilidades(int Idlivro, EstadoLivro estadoLivro, Acervo acervo)
     {
-        Console.WriteLine("Informe o IdLivro do livro que deseja atualizar: ");
-        int idLivro = int.Parse(Console.ReadLine());
-
-        if (idLivro <= 0)
-        {
-            throw new Exception("IdLivro inválido!");
-        }
-
-        Console.WriteLine("Informe o estado do livro: ");
-        EstadoLivro estadoLivro = (EstadoLivro)Enum.Parse(typeof(EstadoLivro), Console.ReadLine());
-
-        if (!Enum.IsDefined(typeof(EstadoLivro), estadoLivro))
-        {
-            throw new Exception("Estado inválido!");
-        }
-
-        Console.WriteLine("Informe o tipo de acervo: ");
-        Acervo acervo = (Acervo)Enum.Parse(typeof(Acervo), Console.ReadLine());
-
-        if (!Enum.IsDefined(typeof(Acervo), acervo))
-        {
-            throw new Exception("Acervo inválido!");
-        }
-
-        //Livro livro = MostrarDados(listaDeLivros).FindById(IdLivro); *conferir
-
-        Livro._estadoLivro = estadoLivro;
-        Livro._acervo = acervo;
-
-        // MostrarDados(listaDeLivros).Save(livro) *conferir
-    }
-
-    static void VerificarDisponibilidades(int Idlivro, EstadoLivro estadoLivro, Acervo acervo)
-    {
-        Console.WriteLine("Qual o Id do livro a ser verificado a disponibilidade? ")
+        Console.WriteLine("Qual o Id do livro a ser verificado a disponibilidade? ");
             int idLivro = int.Parse(Console.ReadLine());
         if (idLivro <= 0)
         {
             throw new Exception("IdLivro inválido!");
         }
 
-        Livro livro = MostrarDados(listaDeLivros).FindById(idLivro);
+        Livro livro = listaDeLivros.FirstOrDefault(livro => livro.IdLivro == idLivro);
 
         if (livro == null)
         {
@@ -592,11 +592,11 @@ internal class ProgramOld
 
         if(livro._acervo == Acervo.AcervoPublico  && livro._estadoLivro == EstadoLivro.Disponível)
         {
-            return "Livro Disponível!"
+            return "Livro Disponível!";
         }
         else
         {
-            return "Livro Indisponível!"
+            return "Livro Indisponível!";
         }
     }
 }

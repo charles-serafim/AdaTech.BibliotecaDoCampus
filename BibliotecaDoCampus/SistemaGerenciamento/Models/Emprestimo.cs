@@ -7,34 +7,33 @@ using System.Threading.Tasks;
 
 namespace SistemaGerenciamento.Models;
 
-public class Emprestimo : Reserva
+public class Emprestimo
 {
-    public static int totalEmprestimos;
-    public int idEmprestimo;
+    private static int s_contadorEmprestimos = 0;
     public static double ValorMultaDiaria = 1;
+    public int _idEmprestimo;
+    public int _idUsuario;
+    public int _idLivro;
     public double multa = 0;
+    public DateTime _dataInicio;
     public DateTime _dataLimite;
     public DateTime? _dataDevolucao;
-    public int idUsuario;
-    public string idLivro;
 
-    public Emprestimo(int idusuario, int idLivro, DateTime dataInicio, DateTime dataLimite, DateTime dataDevolucao)
+    public Emprestimo(int idUsuario, int idLivro, DateTime dataInicio, DateTime dataLimite, DateTime dataDevolucao)
     {
-        IdReserva = ++s_contadorReserva;
-        _idUsuario = idusuario;
+        _idEmprestimo = ++s_contadorEmprestimos;
+        _idUsuario = idUsuario;
         _idLivro = idLivro;
         _dataInicio = dataInicio;
         _dataLimite = dataLimite;
-        totalEmprestimos++;
-        idEmprestimo = totalEmprestimos;
     }
 
     public void MostrarDados(List<Livro> listaDeLivros)
     {
-        Console.WriteLine($"Id do empréstimo: {IdReserva}\n"
+        Console.WriteLine($"Id do empréstimo: {_idEmprestimo}\n"
                         + $"Livro: {listaDeLivros[_idLivro - 1]._titulo}\n"
                         + $"Data de início: {_dataInicio.ToString()}\n"
-                        + $"Data limite para devolução: {_dataFim.ToString()}\n");
+                        + $"Data limite para devolução: {_dataLimite.ToString()}\n");
     }
 
     public double DevolverLivro(DateTime dataDevolucao, Usuario usuario)
@@ -46,14 +45,12 @@ public class Emprestimo : Reserva
         {
             multa += atraso.Days * ValorMultaDiaria;
             usuario._multaTotal += multa;
-            this._estadoReserva = EstadoReserva.FinalizadaComMulta;
 
             Console.WriteLine($"Livro devolvido com {atraso.Days} dias de atraso."
                             + $"Multa: R$ {multa:F2}");
             return multa;
         }
 
-        this._estadoReserva = EstadoReserva.Finalizada;
         Console.WriteLine($"Livro devolvido com sucesso!"
                         + $"Muito obrigado por utilizar nossos serviços.");
         return 0;
