@@ -38,11 +38,40 @@ public class Program
         return livro?._estadoLivro == EstadoLivro.Disponivel;
     }
 
-    bool ReservarLivro(int idLivro); // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
+    bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
+    {
+        Livro? livro = ObterLivro(idLivro);
+        Usuario? usuario = ObterUsuario(idUsuario);
+
+        if (usuario._nivelAcesso == NivelAcesso.Atendente || usuario._nivelAcesso == NivelAcesso.Diretor) return false;
+
+        if (usuario._nivelAcesso == NivelAcesso.Estudante)
+        {
+            livro._filaDeEspera.Add(usuario);
+            return true;
+        }
+
+        for (int i = 0; i < livro._filaDeEspera.Count; i++)
+        {
+            if (livro._filaDeEspera[i + 1]._nivelAcesso == NivelAcesso.Estudante)
+            {
+                livro._filaDeEspera.Insert(i, usuario);
+                return true;
+            }
+        }
+
+        livro._filaDeEspera.Add(usuario);
+        return true;
+    }
     
-    bool DevolverLivro(int idLivro, int? idUsuario); // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
+    bool DevolverLivro(int idLivro, int? idUsuario, EstadoLivro novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
+    {
+    }
     
-    bool CancelarReserva(int idLivro, int idUsuario); // recebe livro e usuario para localizar a reserva
+    bool CancelarReserva(int idLivro, int idUsuario) // recebe livro e usuario para localizar a reserva
+    {
+
+    }
 
     public List<Emprestimo> ExibirHistorico()
     {
@@ -63,4 +92,28 @@ public class Program
     bool AnalisarPedidosDeAteracao(); // exibe o conteudo de solicitacoesAlteracaoCadastro (se houver) para análise e aprovação do atendente e chama AlterarCadastro()
 
     bool AlterarCadastro(); // substitui na listaDeUsuarios a instancia original de um usuario pela em solicitacoesAlteracaoCadastro, após a aprovação da alteração de seu cadastro
+
+
+    public static Usuario? ObterUsuario(int idUsuario)
+    {
+        if (listaDeUsuarios.Find(x => x.IdUsuario == idUsuario) != null)
+        {
+            return listaDeUsuarios.Find(x => x.idUsuario == idUsuario);
+        }
+        else
+        {
+            return null;
+        }
+    }
+    public static Emprestimo? ObterEmprestimo(int idLivro, int idUsuario)
+    {
+        if (historicoDeEmprestimos.Find(x => x._idLivro == idLivro && x._idUsuario == idUsuario) != null )
+        {
+            return historicoDeEmprestimos.Find(x => x._idLivro == idLivro && x._idUsuario == idUsuario);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
