@@ -26,7 +26,7 @@ using SistemaGerenciamento.Models;
 
 namespace SistemaGerenciamento;
 
-internal class Program
+internal class ProgramOld
 {
     static List<Usuario> listaDeUsuarios = new List<Usuario>()
         {

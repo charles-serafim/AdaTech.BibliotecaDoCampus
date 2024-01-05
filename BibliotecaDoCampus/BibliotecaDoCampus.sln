@@ -5,7 +5,10 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGerenciamento", "SistemaGerenciamento\SistemaGerenciamento.csproj", "{50D77A87-1FE5-4FF8-84F9-2F01A49B2C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Usuarios", "Usuarios\Usuarios.csproj", "{C6C451BD-6006-4E93-9475-327B3110FA7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Usuarios", "Usuarios\Usuarios.csproj", "{C6C451BD-6006-4E93-9475-327B3110FA7E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{50D77A87-1FE5-4FF8-84F9-2F01A49B2C17} = {50D77A87-1FE5-4FF8-84F9-2F01A49B2C17}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI\UI.csproj", "{DFB30C76-FECE-4FA1-BD92-AB2989B7BEB1}"
 EndProject

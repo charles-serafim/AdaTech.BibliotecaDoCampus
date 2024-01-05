@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SistemaGerenciamento.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using Usuarios.Users;
+using Usuarios;
 
 namespace UI.LogicaMenu
 {
@@ -34,7 +35,9 @@ namespace UI.LogicaMenu
                     estudante.ListarLivros();       //Aguardando implementação do sistema
                     break;
                 case 2:
-                    estudante.VerificarDisponibilidade(); //Implementado
+                    Console.WriteLine("Informe o id do livro a consultar");
+                    int idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
+                    estudante.VerificarDisponibilidade(idLivro); //Implementado VerificarDisponibilidade()
                     break;
                 case 3:
                     estudante.SolicitarLivro();     //Aguardando implementação do sistema
@@ -48,8 +51,15 @@ namespace UI.LogicaMenu
                 case 6:
                     estudante.CancelarReserva();    //Aguardando implementação do sistema
                     break;
-                case 7:
-                    estudante.ExibirHistorico();    //Implementado
+                case 7:                                           // Implementado ExibirHistorico()
+                    List<Emprestimo> historico = estudante.ExibirHistorico();
+                    foreach (var item in historico)
+                    {
+                        Console.WriteLine(item.idLivro);
+                        Console.WriteLine(item.idLivro);
+                        Console.WriteLine(item._dataDevolucao);
+                        Console.WriteLine(item.multa);
+                    };
                     break;
                 case 8:
                     estudante.ConsultarDebitos();   //Aguardando implementação do sistema

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using SistemaGerenciamento;
-using SistemaGerenciamento.JsonParser;
 using SistemaGerenciamento.Models;
 
-namespace Listagens
+namespace SistemaGerenciamento.JsonParser
 {
     public class Listagem : JsonParser<Livro>
     {

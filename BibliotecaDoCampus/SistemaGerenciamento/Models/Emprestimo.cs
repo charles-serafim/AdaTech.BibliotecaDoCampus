@@ -9,6 +9,8 @@ namespace SistemaGerenciamento.Models;
 
 public class Emprestimo : Reserva
 {
+    public static int totalEmprestimos;
+    public int idEmprestimo;
     public static double ValorMultaDiaria = 1;
     public double multa = 0;
     public DateTime _dataLimite;
@@ -23,6 +25,8 @@ public class Emprestimo : Reserva
         _idLivro = idLivro;
         _dataInicio = dataInicio;
         _dataLimite = dataLimite;
+        totalEmprestimos++;
+        idEmprestimo = totalEmprestimos;
     }
 
     public void MostrarDados(List<Livro> listaDeLivros)

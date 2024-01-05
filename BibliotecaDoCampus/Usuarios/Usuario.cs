@@ -1,4 +1,6 @@
-﻿namespace Usuarios
+﻿using SistemaGerenciamento.Models;
+
+namespace Usuarios
 {
     public abstract class Usuario
     {
@@ -9,7 +11,7 @@
         public NivelAcesso nivelAcesso;
         public string? codigoDeAcesso;
 
-        public override bool VerificarDisponibilidade(int idLivro)
+        public abstract bool VerificarDisponibilidade(int idLivro);
         public abstract List<Emprestimo> ExibirHistorico();
         public abstract List<Emprestimo> ListarReservas(List<Emprestimo> reservas);
         public abstract int LocalizarReserva(string? nomeLivro, int? idLivro);

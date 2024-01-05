@@ -12,7 +12,7 @@ public class Program
 
     static List<Emprestimo> historicoDeEmprestimos = new List<Emprestimo>();
 
-    Usuario usuarioLogado;
+    static Usuario? usuarioLogado;
 
     void Inicializar(); // realiza o carregamento do conteúdo dos arquivos JSON para as listas locais da classe
 
@@ -20,15 +20,22 @@ public class Program
 
     void ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
-    Livro ObterLivro(int idLivro)
+    public static Livro? ObterLivro(int idLivro)
     {
-        return listaDeLivros.Find(x => x.IdLivro == idLivro);
+        if(listaDeLivros.Find(x => x.IdLivro == idLivro) != null)
+        {
+            return listaDeLivros.Find(x => x.IdLivro == idLivro);
+        }
+        else
+        {
+            return null;
+        }
     }
 
-    bool VerificarDisponibilidade(int idLivro)
+    public static bool VerificarDisponibilidade(int idLivro)
     {
-        Livro livro = ObterLivro(idLivro);
-        return livro._estadoLivro == EstadoLivro.Disponivel;
+        Livro? livro = ObterLivro(idLivro);
+        return livro?._estadoLivro == EstadoLivro.Disponivel;
     }
 
     bool ReservarLivro(int idLivro); // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
@@ -37,12 +44,12 @@ public class Program
     
     bool CancelarReserva(int idLivro, int idUsuario); // recebe livro e usuario para localizar a reserva
 
-    List<Emprestimo> ExibirHistorico()
+    public List<Emprestimo> ExibirHistorico()
     {
         return historicoDeEmprestimos;
     }
 
-    List<Emprestimo> ExibirHistoricoDoUsuario()
+    public static List<Emprestimo> ExibirHistoricoDoUsuario()
     {
         return historicoDeEmprestimos.FindAll(x => x.idUsuario == usuarioLogado.IdUsuario);
     }

@@ -1,16 +1,17 @@
 ﻿using System;
 
 using System.Security.Cryptography;
+using Usuarios.Funcionarios;
 
 
-namespace Usuarios.Funcionarios
+namespace Usuarios
 {
     public class Autenticacao
     {
         public static void AutenticarUsuario(int idAtendente, string senha)
         {
             var funcionario = BuscarFuncionarioPorId(idAtendente);
-            
+
             if (funcionario == null || !ValidaSenha(senha))
             {
                 return "Usuário ou senha inválidos!";
@@ -19,7 +20,7 @@ namespace Usuarios.Funcionarios
             {
                 return "Usuário autenticado com sucesso!"
             }
-           
+
 
             byte[] hashSenhaFornecida = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(senha));
 
@@ -53,21 +54,21 @@ namespace Usuarios.Funcionarios
             for (int i = 0; i < senha.length; i++)
             {
                 char caractere = senha[i];
-                
+
                 if (char.IsUpper(caractere))
                 {
                     contadorLetraMaius++;
                 }
-                else if (char.IsLower(caractere)) 
+                else if (char.IsLower(caractere))
                 {
-                    contadorLetraMinus++; 
+                    contadorLetraMinus++;
                 }
                 else if (char.IsDigit(caractere))
                 {
                     contadorNum++;
                 }
 
-                return (contadorLetraMaius >= 1 && contadorLetraMinus >= 1 && contadorNum >= 1);
+                return contadorLetraMaius >= 1 && contadorLetraMinus >= 1 && contadorNum >= 1;
 
 
             }

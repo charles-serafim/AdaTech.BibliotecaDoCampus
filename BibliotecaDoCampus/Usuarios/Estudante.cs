@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SistemaGerenciamento;
+using SistemaGerenciamento.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SistemaGerenciamento.Models;
 
 namespace Usuarios
 {
@@ -20,7 +21,6 @@ namespace Usuarios
             this.ListarReservas().Find(x => x.idEmprestimo == idEmprestimo).estadoEmprestimo = EstadoEmprestimo.Cancelado;
 
         }
-
         public override void DevolverLivro(int idEmprestimo, DateTime dataDevolucao)
         {
             Emprestimo emprestimo = Emprestimo.Find(x => x.idEmprestimo == idEmprestimo);
@@ -34,32 +34,31 @@ namespace Usuarios
                 this.multaTotal += SistemaBiblioteca.CalcularMulta(emprestimo.dataLimite, dataDevolucao);
             }
         }
-
         public override List<Emprestimo> ExibirHistorico()
         {
-            return SistemaGerenciamento.ExibirHistoricoDoUsuario();
+            return Program.ExibirHistoricoDoUsuario();
         }
-
         public override List<Emprestimo> ListarReservas(List<Emprestimo> reservas)
         {
             return reservas = reservas.FindAll(x => x.idUsuario == this.matricula);
         }
-
         public override int LocalizarReserva(string? nomeLivro, int? idLivro)
         {
             return ControleDeReservas.Consultar(nomeLivro, idLivro);
         }
-
         public override bool VerificarDisponibilidade(int idLivro)
         {
-            Livro livro = SistemaGerenciamento.ObterLivro(idLivro);
-            if (livro._acervo == Acervo.AcervoPublico)
+            if(Program.ObterLivro(idLivro) != null)
             {
-                return SistemaGerenciamento.VerificarDisponibilidade(int idLivro);
+                Livro livro = Program.ObterLivro(idLivro);
+                if (livro._acervo == Acervo.AcervoPublico)
+                {
+                    return Program.VerificarDisponibilidade(idLivro);
+                }
+                return false;
             }
             return false;
         }
-
         public void SolicitarLivro(int idLivro)
         {
             Livro livro = Livro.Consultar(idLivro);
