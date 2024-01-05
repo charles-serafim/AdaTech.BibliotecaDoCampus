@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Usuarios;
+using Usuario = Usuarios.Usuario;
 
 namespace UI.LogicaMenu
 {
@@ -34,10 +35,10 @@ namespace UI.LogicaMenu
                 case 1:
                     estudante.ListarLivros();       //Aguardando implementação do sistema
                     break;
-                case 2:
+                case 2:                             //Implementado VerificarDisponibilidade()
                     Console.WriteLine("Informe o id do livro a consultar");
                     int idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
-                    estudante.VerificarDisponibilidade(idLivro); //Implementado VerificarDisponibilidade()
+                    estudante.VerificarDisponibilidade(idLivro); 
                     break;
                 case 3:
                     estudante.SolicitarLivro();     //Aguardando implementação do sistema
@@ -51,7 +52,7 @@ namespace UI.LogicaMenu
                 case 6:
                     estudante.CancelarReserva();    //Aguardando implementação do sistema
                     break;
-                case 7:                                           // Implementado ExibirHistorico()
+                case 7:                             // Implementado ExibirHistorico()
                     List<Emprestimo> historico = estudante.ExibirHistorico();
                     foreach (var item in historico)
                     {
@@ -61,8 +62,8 @@ namespace UI.LogicaMenu
                         Console.WriteLine(item.multa);
                     };
                     break;
-                case 8:
-                    estudante.ConsultarDebitos();   //Aguardando implementação do sistema
+                case 8:                              // Implementado ConsultarDebitos()
+                    Console.WriteLine(estudante.ConsultarDebitos());
                     break;
                 case 9:
                     estudante.LocalizarReserva();   //Aguardando implementação do sistema

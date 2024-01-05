@@ -7,10 +7,10 @@ namespace Usuarios
         public string nome;
         public string sobrenome;
         public string email;
-        public double multaTotal;
+        public double debitoTotal;
         public NivelAcesso nivelAcesso;
         public string? codigoDeAcesso;
-
+        public abstract double ConsultarDebitos();
         public abstract bool VerificarDisponibilidade(int idLivro);
         public abstract List<Emprestimo> ExibirHistorico();
         public abstract List<Emprestimo> ListarReservas(List<Emprestimo> reservas);

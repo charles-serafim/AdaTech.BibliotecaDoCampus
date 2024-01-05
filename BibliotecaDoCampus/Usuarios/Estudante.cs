@@ -68,5 +68,10 @@ namespace Usuarios
                 livro.requerente = this.matricula;
             }
         }
+
+        public override double ConsultarDebitos()
+        {
+            return this.debitoTotal;
+        }
     }
 }
