@@ -27,6 +27,12 @@ namespace UI.LogicaMenu
             Console.WriteLine("11 - Solicitar alteração do cadastro");
             Console.WriteLine("0 - Sair");
 
+/*
+            *bool VerificarDisponibilidade(int idLivro); // retorna a disponibilidade do livro
+            *void ExibirHistorico(); // retorna o historico completo de emprestimos armazenados
+            *void ExibirHistoricoDoUsuario(); // retorna o historico filtrando pelo usuarioLogado
+*/
+
             int opcao = int.TryParse(Console.ReadLine(), out opcao) ? opcao : 0;
             switch (opcao)
             {

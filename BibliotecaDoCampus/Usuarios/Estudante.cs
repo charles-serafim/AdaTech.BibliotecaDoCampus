@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SistemaGerenciamento.Models;
 
 namespace Usuarios
 {
@@ -13,6 +14,7 @@ namespace Usuarios
         {
             this.nivelAcesso = NivelAcesso.Estudante;
         }
+
         public override void CancelarReserva(int idEmprestimo)
         {
             this.ListarReservas().Find(x => x.idEmprestimo == idEmprestimo).estadoEmprestimo = EstadoEmprestimo.Cancelado;
@@ -48,10 +50,16 @@ namespace Usuarios
             return ControleDeReservas.Consultar(nomeLivro, idLivro);
         }
 
-        public override bool VerificarDisponibilidade(Livro livro)
+        public override bool VerificarDisponibilidade(int idLivro)
         {
-            return livro.estadoLivro == EstadoLivro.Disponivel;
+            Livro livro = SistemaGerenciamento.ObterLivro(idLivro);
+            if (livro._acervo == Acervo.AcervoPublico)
+            {
+                return SistemaGerenciamento.VerificarDisponibilidade(int idLivro);
+            }
+            return false;
         }
+
         public void SolicitarLivro(int idLivro)
         {
             Livro livro = Livro.Consultar(idLivro);

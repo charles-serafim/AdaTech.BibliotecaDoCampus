@@ -9,7 +9,7 @@
         public NivelAcesso nivelAcesso;
         public string? codigoDeAcesso;
 
-        public abstract bool VerificarDisponibilidade(Livro livro);
+        public override bool VerificarDisponibilidade(int idLivro)
         public abstract List<Emprestimo> ExibirHistorico(List<Emprestimo> emprestimos);
         public abstract List<Emprestimo> ListarReservas(List<Emprestimo> reservas);
         public abstract int LocalizarReserva(string? nomeLivro, int? idLivro);

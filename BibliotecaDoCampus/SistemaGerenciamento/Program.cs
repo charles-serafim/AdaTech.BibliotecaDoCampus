@@ -2,7 +2,7 @@
 
 namespace SistemaGerenciamento;
 
-internal class Program
+public class Program
 {
     static List<Livro> listaDeLivros = new List<Livro>();
 
@@ -20,7 +20,11 @@ internal class Program
 
     void ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
-    bool VerificarDisponibilidade(int idLivro); // retorna a disponibilidade do livro
+    public bool VerificarDisponibilidade(int idLivro)
+    {
+        var livro = ObterLivro(idLivro);
+        return livro.estadoLivro == EstadoLivro.Disponivel;
+    }
 
     bool ReservarLivro(int idLivro); // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
     
