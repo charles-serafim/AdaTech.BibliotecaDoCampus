@@ -28,9 +28,49 @@ namespace SistemaGerenciamento.JsonParser
                 return null;
             }
         }
-        public static void Salvar(List<T> list)
+        public static void SalvarLivros(List<T> list)
         {
             string absolutePath = $@"C:\Users\luanar\source\repos\AdaTech.BibliotecaDoCampus\BibliotecaDoCampus\SistemaGerenciamento\JsonParser\db.json";
+            try
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(absolutePath, json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+        public static void SalvarEmprestimos(List<T> list)
+        {
+            string absolutePath = $@"C:\Users\luanar\source\repos\AdaTech.BibliotecaDoCampus\BibliotecaDoCampus\SistemaGerenciamento\JsonParser\db.json"; //mudar path dps
+            try
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(absolutePath, json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+        public static void SalvarUsuarios(List<T> list)
+        {
+            string absolutePath = $@"C:\Users\luanar\source\repos\AdaTech.BibliotecaDoCampus\BibliotecaDoCampus\SistemaGerenciamento\JsonParser\db.json"; //mudar path dps
+            try
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(absolutePath, json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        public static void SalvarSolicitaçõesDeAlteracoesCadastro(List<T> list)
+        {
+            string absolutePath = $@"C:\Users\luanar\source\repos\AdaTech.BibliotecaDoCampus\BibliotecaDoCampus\SistemaGerenciamento\JsonParser\db.json"; //mudar path dps
             try
             {
                 string json = System.Text.Json.JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
