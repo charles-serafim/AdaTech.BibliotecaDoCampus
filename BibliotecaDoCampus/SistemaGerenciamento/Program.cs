@@ -1,4 +1,7 @@
-﻿using SistemaGerenciamento.Models;
+﻿using SistemaGerenciamento.JsonParser;
+using SistemaGerenciamento.Models;
+
+
 
 namespace SistemaGerenciamento;
 
@@ -14,9 +17,17 @@ public class Program
 
     static Usuario? usuarioLogado;
 
-    void Inicializar(); // realiza o carregamento do conteúdo dos arquivos JSON para as listas locais da classe
+    void Inicializar()
+    {
+        listaDeLivros = Listagem.GetLivros();
+        listaDeUsuarios = Listagem.GetUsuarios();
+        historicoDeEmprestimos = Listagem.GetEmprestimos();
+    } // realiza o carregamento do conteúdo dos arquivos JSON para as listas locais da classe
 
-    void SalvarTudo(); // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
+    void SalvarTudo()
+    {
+        JsonParser<Livro>.Salvar(listaDeLivros);
+    } // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
 
     void ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
