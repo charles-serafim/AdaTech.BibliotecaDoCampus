@@ -14,6 +14,7 @@ namespace Usuarios
         public abstract bool VerificarDisponibilidade(int idLivro);
         public abstract List<Emprestimo> ExibirHistorico();
         public abstract List<Emprestimo> ListarReservas(List<Emprestimo> reservas);
+        public abstract List<Livros> ListarLivros();
         public abstract int LocalizarReserva(string? nomeLivro, int? idLivro);
         public abstract void CancelarReserva(int idEmprestimo);
         public abstract void DevolverLivro(int idEmprestimo, DateTime dataDevolucao);

@@ -33,9 +33,16 @@ namespace UI.LogicaMenu
             switch (opcao)
             {
                 case 1:
-                    estudante.ListarLivros();       //Aguardando implementação do sistema
+                    List<Livro> listaLivros = estudante.ListarLivros();       //Implementado ListarLivros()
+                    foreach (var item in listaLivros)
+                    {
+                        Console.WriteLine(item.IdLivro);
+                        Console.WriteLine(item._titulo);
+                        Console.WriteLine(item._autores);
+                        Console.WriteLine(item._edicao);
+                    };  
                     break;
-                case 2:                             //Implementado VerificarDisponibilidade()
+                case 2:                                                      //Implementado VerificarDisponibilidade()
                     Console.WriteLine("Informe o id do livro a consultar");
                     int idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
                     estudante.VerificarDisponibilidade(idLivro); 
@@ -52,7 +59,7 @@ namespace UI.LogicaMenu
                 case 6:
                     estudante.CancelarReserva();    //Aguardando implementação do sistema
                     break;
-                case 7:                             // Implementado ExibirHistorico()
+                case 7:                                                     // Implementado ExibirHistorico()
                     List<Emprestimo> historico = estudante.ExibirHistorico();
                     foreach (var item in historico)
                     {
@@ -62,7 +69,7 @@ namespace UI.LogicaMenu
                         Console.WriteLine(item.multa);
                     };
                     break;
-                case 8:                              // Implementado ConsultarDebitos()
+                case 8:                                                      // Implementado ConsultarDebitos()
                     Console.WriteLine(estudante.ConsultarDebitos());
                     break;
                 case 9:

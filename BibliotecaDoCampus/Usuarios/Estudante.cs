@@ -42,6 +42,10 @@ namespace Usuarios
         {
             return reservas = reservas.FindAll(x => x.idUsuario == this.matricula);
         }
+        public override List<Livros> ListarLivros()
+        {
+            return Program.ListarLivros().FindAll(x => x.acervo == Acervo.AcervoPublico);
+        }
         public override int LocalizarReserva(string? nomeLivro, int? idLivro)
         {
             return ControleDeReservas.Consultar(nomeLivro, idLivro);
