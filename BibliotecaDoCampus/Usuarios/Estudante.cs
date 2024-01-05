@@ -16,6 +16,11 @@ namespace Usuarios
             this.nivelAcesso = NivelAcesso.Estudante;
         }
 
+        public override bool ReservarLivro(int idLivro)
+        {
+            int idUsuario = matricula;
+            return Program.ReservarLivro(idLivro, idUsuario);
+        }
         public override void CancelarReserva(int idEmprestimo)
         {
             this.ListarReservas().Find(x => x.idEmprestimo == idEmprestimo).estadoEmprestimo = EstadoEmprestimo.Cancelado;
@@ -42,9 +47,9 @@ namespace Usuarios
         {
             return reservas = reservas.FindAll(x => x.idUsuario == this.matricula);
         }
-        public override List<Livros> ListarLivros()
+        public override List<Livro> ListarLivros()
         {
-            return Program.ListarLivros().FindAll(x => x.acervo == Acervo.AcervoPublico);
+            return Program.ListarLivros().FindAll(x => x._acervo == Acervo.AcervoPublico);
         }
         public override int LocalizarReserva(string? nomeLivro, int? idLivro)
         {

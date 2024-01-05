@@ -32,8 +32,8 @@ namespace UI.LogicaMenu
             int opcao = int.TryParse(Console.ReadLine(), out opcao) ? opcao : 0;
             switch (opcao)
             {
-                case 1:
-                    List<Livro> listaLivros = estudante.ListarLivros();       //Implementado ListarLivros()
+                case 1:                                                             //Implementado ListarLivros()
+                    List<Livro> listaLivros = estudante.ListarLivros();       
                     foreach (var item in listaLivros)
                     {
                         Console.WriteLine(item.IdLivro);
@@ -41,25 +41,27 @@ namespace UI.LogicaMenu
                         Console.WriteLine(item._autores);
                         Console.WriteLine(item._edicao);
                     };  
-                    break;
-                case 2:                                                      //Implementado VerificarDisponibilidade()
+                    break;                          //Implementado ListarLivros()
+                case 2:                                                      
                     Console.WriteLine("Informe o id do livro a consultar");
                     int idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
                     estudante.VerificarDisponibilidade(idLivro); 
-                    break;
+                    break;                          //Implementado VerificarDisponibilidade()
                 case 3:
                     estudante.SolicitarLivro();     //Aguardando implementação do sistema
                     break;
                 case 4:
-                    estudante.ReservarLivro();      //Aguardando implementação do sistema
-                    break;
+                    Console.WriteLine("Informe o id do livro que deseja reservar");
+                    idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
+                    estudante.ReservarLivro(idLivro);      
+                    break;                          //Implementado ReservarLivro()
                 case 5:
                     estudante.DevolverLivro();      //Aguardando implementação do sistema
                     break;
                 case 6:
                     estudante.CancelarReserva();    //Aguardando implementação do sistema
                     break;
-                case 7:                                                     // Implementado ExibirHistorico()
+                case 7:                                                     
                     List<Emprestimo> historico = estudante.ExibirHistorico();
                     foreach (var item in historico)
                     {
@@ -68,10 +70,10 @@ namespace UI.LogicaMenu
                         Console.WriteLine(item._dataDevolucao);
                         Console.WriteLine(item.multa);
                     };
-                    break;
-                case 8:                                                      // Implementado ConsultarDebitos()
+                    break;                          // Implementado ExibirHistorico()
+                case 8:                                                      
                     Console.WriteLine(estudante.ConsultarDebitos());
-                    break;
+                    break;                          // Implementado ConsultarDebitos()
                 case 9:
                     estudante.LocalizarReserva();   //Aguardando implementação do sistema
                     break;

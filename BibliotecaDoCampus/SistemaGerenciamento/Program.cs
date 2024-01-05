@@ -33,7 +33,7 @@ public class Program
         JsonParser<Usuario>.SalvarUsuarios(solicitacoesAlteracaoCadastro);
     } // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
 
-    List<Livro> ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
+    public static List<Livro> ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
     public static Livro? ObterLivro(int idLivro)
     {
@@ -53,7 +53,7 @@ public class Program
         return livro?._estadoLivro == EstadoLivro.Disponivel;
     }
 
-    bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
+    public static bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
     {
         Livro? livro = ObterLivro(idLivro);
         Usuario? usuario = ObterUsuario(idUsuario);
