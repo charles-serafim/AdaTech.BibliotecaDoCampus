@@ -35,22 +35,10 @@ public class Program
 
     public static List<Livro> ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
-    public static Livro? ObterLivro(int idLivro)
-    {
-        if(listaDeLivros.Find(x => x.IdLivro == idLivro) != null)
-        {
-            return listaDeLivros.Find(x => x.IdLivro == idLivro);
-        }
-        else
-        {
-            return null;
-        }
-    }
-
     public static bool VerificarDisponibilidade(int idLivro)
     {
         Livro? livro = ObterLivro(idLivro);
-        return livro?._estadoLivro == EstadoLivro.Disponivel;
+        return livro?._estadoLivro == EstadoLivro.Disponível;
     }
 
     public static bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
@@ -128,7 +116,7 @@ public class Program
 
     public static List<Emprestimo> ExibirHistoricoDoUsuario()
     {
-        return historicoDeEmprestimos.FindAll(x => x.idUsuario == usuarioLogado.IdUsuario);
+        return historicoDeEmprestimos.FindAll(x => x._idUsuario == usuarioLogado.IdUsuario);
     }
     
     void ListarReservasDoLivro(int idLivro); // exibe a fila de espera para um livro
@@ -141,7 +129,18 @@ public class Program
 
     bool AlterarCadastro(); // substitui na listaDeUsuarios a instancia original de um usuario pela em solicitacoesAlteracaoCadastro, após a aprovação da alteração de seu cadastro
 
-
+    public static Livro? ObterLivro(int idLivro)
+    {
+        if (listaDeLivros.Find(x => x.IdLivro == idLivro) != null)
+        {
+            return listaDeLivros.Find(x => x.IdLivro == idLivro);
+        }
+        else
+        {
+            return null;
+        }
+    }
+    
     public static Usuario? ObterUsuario(int idUsuario)
     {
         if (listaDeUsuarios.Find(x => x.IdUsuario == idUsuario) != null)
