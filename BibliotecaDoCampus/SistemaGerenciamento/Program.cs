@@ -79,7 +79,7 @@ public class Program
         return true;
     }
     
-    bool DevolverLivro(int idLivro, int? idUsuario, EstadoLivro novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
+    public static bool DevolverLivro(int idLivro, int? idUsuario, EstadoLivro? novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
     {
         Livro livro;
         Usuario usuario;
@@ -97,7 +97,8 @@ public class Program
         dataDevolucao = DateTime.Now;
         multa = emprestimo.DevolverLivro(dataDevolucao, usuario);
         usuario._multaTotal += multa;
-        livro.DevolverLivro(novoEstadoLivro);
+        if(novoEstadoLivro == null) novoEstadoLivro = EstadoLivro.Disponivel;
+        else livro.DevolverLivro((EstadoLivro)novoEstadoLivro);
 
         return true;
     }

@@ -18,6 +18,6 @@ namespace Usuarios
         public abstract bool ReservarLivro(int idLivro);
         public abstract int LocalizarReserva(string? nomeLivro, int? idLivro);
         public abstract void CancelarReserva(int idEmprestimo);
-        public abstract void DevolverLivro(int idEmprestimo, DateTime dataDevolucao);
+        public abstract void DevolverLivro(int idLivro);
     }
 }

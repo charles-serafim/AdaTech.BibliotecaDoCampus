@@ -26,18 +26,9 @@ namespace Usuarios
             this.ListarReservas().Find(x => x.idEmprestimo == idEmprestimo).estadoEmprestimo = EstadoEmprestimo.Cancelado;
 
         }
-        public override void DevolverLivro(int idEmprestimo, DateTime dataDevolucao)
+        public override void DevolverLivro(int idLivro)
         {
-            Emprestimo emprestimo = Emprestimo.Find(x => x.idEmprestimo == idEmprestimo);
-            if(emprestimo.dataLimite > dataDevolucao)
-            {
-                emprestimo.estadoEmprestimo = EstadoEmprestimo.Finalizado;
-            }
-            else
-            {
-                emprestimo.estadoEmprestimo = EstadoEmprestimo.FinalizadoComMulta;
-                this.multaTotal += SistemaBiblioteca.CalcularMulta(emprestimo.dataLimite, dataDevolucao);
-            }
+            Program.DevolverLivro(idLivro, matricula, null);
         }
         public override List<Emprestimo> ExibirHistorico()
         {

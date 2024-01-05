@@ -56,8 +56,10 @@ namespace UI.LogicaMenu
                     estudante.ReservarLivro(idLivro);      
                     break;                          //Implementado ReservarLivro()
                 case 5:
-                    estudante.DevolverLivro();      //Aguardando implementação do sistema
-                    break;
+                    Console.WriteLine("Informe o id do livro que deseja devolver");
+                    idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
+                    estudante.DevolverLivro(idLivro);
+                    break;                          //Implementado DevolverLivro()
                 case 6:
                     estudante.CancelarReserva();    //Aguardando implementação do sistema
                     break;
