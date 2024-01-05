@@ -20,7 +20,11 @@ namespace SistemaGerenciamento.JsonParser
             List<Livro> livros2;
             return livros2 = ReceberJson(); ;
         }
-        
+        public static List<Livro> GetUsuarios();
+        public static List<Livro> GetEmprestimos();
+        public static List<Livro> GetSolicitacoesDeAlteracaoCadastro();
+
+
         protected List<Livro> ListarLivros(Func<Livro, bool> predicate) =>
             livros.Where(predicate).ToList();
 

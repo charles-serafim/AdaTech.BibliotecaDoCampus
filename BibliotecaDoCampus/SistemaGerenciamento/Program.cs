@@ -22,11 +22,15 @@ public class Program
         listaDeLivros = Listagem.GetLivros();
         listaDeUsuarios = Listagem.GetUsuarios();
         historicoDeEmprestimos = Listagem.GetEmprestimos();
+        solicitacoesAlteracaoCadastro = Listagem.GetSolicitacoesDeAlteracaoCadastro();
     } // realiza o carregamento do conteúdo dos arquivos JSON para as listas locais da classe
 
     void SalvarTudo()
     {
-        JsonParser<Livro>.Salvar(listaDeLivros);
+        JsonParser<Livro>.SalvarLivros(listaDeLivros);
+        JsonParser<Usuario>.SalvarUsuarios(listaDeUsuarios);
+        JsonParser<Emprestimo>.SalvarEmprestimos(historicoDeEmprestimos);
+        JsonParser<Usuario>.SalvarUsuarios(solicitacoesAlteracaoCadastro);
     } // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
 
     void ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
