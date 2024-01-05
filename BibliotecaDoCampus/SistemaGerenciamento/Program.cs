@@ -33,7 +33,7 @@ public class Program
         JsonParser<Usuario>.SalvarUsuarios(solicitacoesAlteracaoCadastro);
     } // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
 
-    void ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
+    List<Livro> ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
     public static Livro? ObterLivro(int idLivro)
     {
