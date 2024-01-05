@@ -10,7 +10,7 @@
         public string? codigoDeAcesso;
 
         public override bool VerificarDisponibilidade(int idLivro)
-        public abstract List<Emprestimo> ExibirHistorico(List<Emprestimo> emprestimos);
+        public abstract List<Emprestimo> ExibirHistorico();
         public abstract List<Emprestimo> ListarReservas(List<Emprestimo> reservas);
         public abstract int LocalizarReserva(string? nomeLivro, int? idLivro);
         public abstract void CancelarReserva(int idEmprestimo);

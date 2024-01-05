@@ -27,47 +27,41 @@ namespace UI.LogicaMenu
             Console.WriteLine("11 - Solicitar alteração do cadastro");
             Console.WriteLine("0 - Sair");
 
-/*
-            *bool VerificarDisponibilidade(int idLivro); // retorna a disponibilidade do livro
-            *void ExibirHistorico(); // retorna o historico completo de emprestimos armazenados
-            *void ExibirHistoricoDoUsuario(); // retorna o historico filtrando pelo usuarioLogado
-*/
-
             int opcao = int.TryParse(Console.ReadLine(), out opcao) ? opcao : 0;
             switch (opcao)
             {
                 case 1:
-                    estudante.ListarLivros();       //sistema
+                    estudante.ListarLivros();       //Aguardando implementação do sistema
                     break;
                 case 2:
-                    estudante.VerificarDisponibilidade(); //usuario
+                    estudante.VerificarDisponibilidade(); //Implementado
                     break;
                 case 3:
-                    estudante.SolicitarLivro();     //estudante
+                    estudante.SolicitarLivro();     //Aguardando implementação do sistema
                     break;
                 case 4:
-                    estudante.ReservarLivro();      //sistema
+                    estudante.ReservarLivro();      //Aguardando implementação do sistema
                     break;
                 case 5:
-                    estudante.DevolverLivro();      //usuario
+                    estudante.DevolverLivro();      //Aguardando implementação do sistema
                     break;
                 case 6:
-                    estudante.CancelarReserva();    //usuario
+                    estudante.CancelarReserva();    //Aguardando implementação do sistema
                     break;
                 case 7:
-                    estudante.ExibirHistorico();    //usuario
+                    estudante.ExibirHistorico();    //Implementado
                     break;
                 case 8:
-                    estudante.ConsultarDebitos();   //sistema
+                    estudante.ConsultarDebitos();   //Aguardando implementação do sistema
                     break;
                 case 9:
-                    estudante.LocalizarReserva();   //usuario
+                    estudante.LocalizarReserva();   //Aguardando implementação do sistema
                     break;
                 case 10:
-                    estudante.ListarReservas();     //usuario
+                    estudante.ListarReservas();     //Aguardando implementação do sistema
                     break;
                 case 11:
-                    estudante.SolicitarAlteracaoCadastro();     //sistema -> atendente
+                    estudante.SolicitarAlteracaoCadastro();     //Aguardando implementação do sistema
                     break;
                 case 0:
                     break;

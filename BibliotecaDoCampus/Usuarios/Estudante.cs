@@ -35,9 +35,9 @@ namespace Usuarios
             }
         }
 
-        public override List<Emprestimo> ExibirHistorico(List<Emprestimo> emprestimos)
+        public override List<Emprestimo> ExibirHistorico()
         {
-            return emprestimos=emprestimos.FindAll(x => x.idUsuario == this.matricula);
+            return SistemaGerenciamento.ExibirHistoricoDoUsuario();
         }
 
         public override List<Emprestimo> ListarReservas(List<Emprestimo> reservas)

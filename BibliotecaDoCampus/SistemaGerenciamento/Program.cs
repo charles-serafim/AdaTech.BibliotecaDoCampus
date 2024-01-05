@@ -4,7 +4,7 @@ namespace SistemaGerenciamento;
 
 public class Program
 {
-    static List<Livro> listaDeLivros = new List<Livro>();
+    public static List<Livro> listaDeLivros = new List<Livro>();
 
     static List<Usuario> listaDeUsuarios = new List<Usuario>();
 
@@ -20,10 +20,15 @@ public class Program
 
     void ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
-    public bool VerificarDisponibilidade(int idLivro)
+    Livro ObterLivro(int idLivro)
     {
-        var livro = ObterLivro(idLivro);
-        return livro.estadoLivro == EstadoLivro.Disponivel;
+        return listaDeLivros.Find(x => x.IdLivro == idLivro);
+    }
+
+    bool VerificarDisponibilidade(int idLivro)
+    {
+        Livro livro = ObterLivro(idLivro);
+        return livro._estadoLivro == EstadoLivro.Disponivel;
     }
 
     bool ReservarLivro(int idLivro); // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
@@ -31,10 +36,16 @@ public class Program
     bool DevolverLivro(int idLivro, int? idUsuario); // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
     
     bool CancelarReserva(int idLivro, int idUsuario); // recebe livro e usuario para localizar a reserva
-    
-    void ExibirHistorico(); // retorna o historico completo de emprestimos armazenados
 
-    void ExibirHistoricoDoUsuario(); // retorna o historico filtrando pelo usuarioLogado
+    List<Emprestimo> ExibirHistorico()
+    {
+        return historicoDeEmprestimos;
+    }
+
+    List<Emprestimo> ExibirHistoricoDoUsuario()
+    {
+        return historicoDeEmprestimos.FindAll(x => x.idUsuario == usuarioLogado.IdUsuario);
+    }
     
     void ListarReservasDoLivro(int idLivro); // exibe a fila de espera para um livro
     

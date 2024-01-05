@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ public class Emprestimo : Reserva
     public double multa = 0;
     public DateTime _dataLimite;
     public DateTime? _dataDevolucao;
+    public int idUsuario;
+    public string idLivro;
 
     public Emprestimo(int idusuario, int idLivro, DateTime dataInicio, DateTime dataLimite, DateTime dataDevolucao)
     {
