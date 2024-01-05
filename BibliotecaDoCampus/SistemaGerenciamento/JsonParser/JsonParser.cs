@@ -28,5 +28,18 @@ namespace SistemaGerenciamento.JsonParser
                 return null;
             }
         }
+        public static void Salvar(List<T> list)
+        {
+            string absolutePath = $@"C:\Users\luanar\source\repos\AdaTech.BibliotecaDoCampus\BibliotecaDoCampus\SistemaGerenciamento\JsonParser\db.json";
+            try
+            {
+                string json = System.Text.Json.JsonSerializer.Serialize(list, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(absolutePath, json);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
     }
 }
