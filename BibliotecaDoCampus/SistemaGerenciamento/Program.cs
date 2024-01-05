@@ -33,7 +33,7 @@ public class Program
         JsonParser<Usuario>.SalvarUsuarios(solicitacoesAlteracaoCadastro);
     } // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
 
-    void ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
+    public static List<Livro> ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
 
     public static bool VerificarDisponibilidade(int idLivro)
     {
@@ -41,7 +41,7 @@ public class Program
         return livro?._estadoLivro == EstadoLivro.Disponível;
     }
 
-    public bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
+    public static bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
     {
         Livro? livro = ObterLivro(idLivro);
         Usuario? usuario = ObterUsuario(idUsuario);
@@ -67,7 +67,7 @@ public class Program
         return true;
     }
     
-    public bool DevolverLivro(int idLivro, int? idUsuario, EstadoLivro novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
+    public static bool DevolverLivro(int idLivro, int? idUsuario, EstadoLivro? novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
     {
         Livro livro;
         Usuario usuario;
@@ -85,7 +85,8 @@ public class Program
         dataDevolucao = DateTime.Now;
         multa = emprestimo.DevolverLivro(dataDevolucao, usuario);
         usuario._multaTotal += multa;
-        livro.DevolverLivro(novoEstadoLivro);
+        if(novoEstadoLivro == null) novoEstadoLivro = EstadoLivro.Disponivel;
+        else livro.DevolverLivro((EstadoLivro)novoEstadoLivro);
 
         return true;
     }

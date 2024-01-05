@@ -24,35 +24,44 @@ namespace UI.LogicaMenu
             Console.WriteLine("6 - Cancelar reserva");
             Console.WriteLine("7 - Exibir histórico");
             Console.WriteLine("8 - Consultar débitos");
-            Console.WriteLine("9 - Localizar reserva");
-            Console.WriteLine("10 - Listar reservas");
-            Console.WriteLine("11 - Solicitar alteração do cadastro");
+            Console.WriteLine("9 - Solicitar alteração do cadastro");
             Console.WriteLine("0 - Sair");
 
             int opcao = int.TryParse(Console.ReadLine(), out opcao) ? opcao : 0;
             switch (opcao)
             {
-                case 1:
-                    estudante.ListarLivros();       //Aguardando implementação do sistema
-                    break;
-                case 2:                             //Implementado VerificarDisponibilidade()
+                case 1:                                                             //Implementado ListarLivros()
+                    List<Livro> listaLivros = estudante.ListarLivros();       
+                    foreach (var item in listaLivros)
+                    {
+                        Console.WriteLine(item.IdLivro);
+                        Console.WriteLine(item._titulo);
+                        Console.WriteLine(item._autores);
+                        Console.WriteLine(item._edicao);
+                    };  
+                    break;                          //Implementado ListarLivros()
+                case 2:                                                      
                     Console.WriteLine("Informe o id do livro a consultar");
                     int idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
                     estudante.VerificarDisponibilidade(idLivro); 
-                    break;
+                    break;                          //Implementado VerificarDisponibilidade()
                 case 3:
                     estudante.SolicitarLivro();     //Aguardando implementação do sistema
-                    break;
+                    break;                          //SolicitarLivro()
                 case 4:
-                    estudante.ReservarLivro();      //Aguardando implementação do sistema
-                    break;
+                    Console.WriteLine("Informe o id do livro que deseja reservar");
+                    idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
+                    estudante.ReservarLivro(idLivro);      
+                    break;                          //Implementado ReservarLivro()
                 case 5:
-                    estudante.DevolverLivro();      //Aguardando implementação do sistema
-                    break;
+                    Console.WriteLine("Informe o id do livro que deseja devolver");
+                    idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
+                    estudante.DevolverLivro(idLivro);
+                    break;                          //Implementado DevolverLivro()
                 case 6:
                     estudante.CancelarReserva();    //Aguardando implementação do sistema
-                    break;
-                case 7:                             // Implementado ExibirHistorico()
+                    break;                          //CancelarReserva()
+                case 7:                                                     
                     List<Emprestimo> historico = estudante.ExibirHistorico();
                     foreach (var item in historico)
                     {
@@ -61,19 +70,13 @@ namespace UI.LogicaMenu
                         Console.WriteLine(item._dataDevolucao);
                         Console.WriteLine(item.multa);
                     };
-                    break;
-                case 8:                              // Implementado ConsultarDebitos()
+                    break;                          //Implementado ExibirHistorico()
+                case 8:                                                      
                     Console.WriteLine(estudante.ConsultarDebitos());
-                    break;
+                    break;                          //Implementado ConsultarDebitos()
                 case 9:
-                    estudante.LocalizarReserva();   //Aguardando implementação do sistema
-                    break;
-                case 10:
-                    estudante.ListarReservas();     //Aguardando implementação do sistema
-                    break;
-                case 11:
                     estudante.SolicitarAlteracaoCadastro();     //Aguardando implementação do sistema
-                    break;
+                    break;                          //SolicitarAlteracaoCadastro()
                 case 0:
                     break;
                 default:
