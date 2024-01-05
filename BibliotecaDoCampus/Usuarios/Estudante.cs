@@ -21,10 +21,9 @@ namespace Usuarios
             int idUsuario = matricula;
             return Program.ReservarLivro(idLivro, idUsuario);
         }
-        public override void CancelarReserva(int idEmprestimo)
+        public override bool CancelarReserva(int idLivro)
         {
-            this.ListarReservas().Find(x => x.idEmprestimo == idEmprestimo).estadoEmprestimo = EstadoEmprestimo.Cancelado;
-
+            Program.CancelarReserva(idLivro, matricula);
         }
         public override void DevolverLivro(int idLivro)
         {

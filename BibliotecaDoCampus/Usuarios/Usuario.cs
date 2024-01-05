@@ -17,7 +17,7 @@ namespace Usuarios
         public abstract List<Livro> ListarLivros();
         public abstract bool ReservarLivro(int idLivro);
         public abstract int LocalizarReserva(string? nomeLivro, int? idLivro);
-        public abstract void CancelarReserva(int idEmprestimo);
+        public abstract bool CancelarReserva(int idLivro);
         public abstract void DevolverLivro(int idLivro);
     }
 }

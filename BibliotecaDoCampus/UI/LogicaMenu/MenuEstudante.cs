@@ -59,8 +59,11 @@ namespace UI.LogicaMenu
                     estudante.DevolverLivro(idLivro);
                     break;                          //Implementado DevolverLivro()
                 case 6:
-                    estudante.CancelarReserva();    //Aguardando implementação do sistema
-                    break;                          //CancelarReserva()
+                    Console.WriteLine("Informe o id do livro que deseja cancelar a reserva");
+                    idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
+                    if(estudante.CancelarReserva(idLivro)) Console.WriteLine("Reserva cancelada com sucesso");
+                    else Console.WriteLine("Erro no cancelamento da reserva");
+                    break;                          //Implementado CancelarReserva()
                 case 7:                                                     
                     List<Emprestimo> historico = estudante.ExibirHistorico();
                     foreach (var item in historico)

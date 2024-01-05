@@ -103,7 +103,7 @@ public class Program
         return true;
     }
 
-    bool CancelarReserva(int idLivro, int idUsuario) // recebe livro e usuario para localizar a reserva
+    public static bool CancelarReserva(int idLivro, int idUsuario) // recebe livro e usuario para localizar a reserva
     {
         Livro? livro = ObterLivro(idLivro);
 
@@ -146,7 +146,7 @@ public class Program
     {
         if (listaDeUsuarios.Find(x => x.IdUsuario == idUsuario) != null)
         {
-            return listaDeUsuarios.Find(x => x.idUsuario == idUsuario);
+            return listaDeUsuarios.Find(x => x.IdUsuario == idUsuario);
         }
         else
         {

@@ -1,35 +1,36 @@
-﻿using UI.LogicaMenu;
-using Usuarios.Users;
+﻿using SistemaGerenciamento;
+using UI.LogicaMenu;
+using Usuarios;
 
 namespace UI
 {
-    internal class Program
+    internal class InterfaceUsuario
     {
         static void Main(string[] args)
         {                                    
                 Console.WriteLine("Bem-vindo(a) à biblioteca do nosso campus!");     
                 Console.WriteLine("Informe seu Usuário e senha para fazer login no sistema.");
                 Console.Write("Usuario: ");
-                var usuario = Console.ReadLine();
+                var login = Console.ReadLine();
                 Console.Write("Senha: ");
                 var senha = Console.ReadLine();
-                Usuario user = SistemaBiblioteca.AutenticarUsuario(usuario, senha);
+                Usuario user = Program.AutenticarUsuario(login, senha);
             
                 if(user != null)
                 {
-                    if(user.nivelAcesso == Usuarios.Enums.NivelAcesso.Diretor)
+                    if(user.nivelAcesso == NivelAcesso.Diretor)
                     {
                         MenuDiretor.Menu(user);                      
                     }
-                    if(user.nivelAcesso == Usuarios.Enums.NivelAcesso.Atendente)
+                    if(user.nivelAcesso == NivelAcesso.Atendente)
                     {
                         MenuAtendente.Menu(user);
                     }
-                    if(user.nivelAcesso == Usuarios.Enums.NivelAcesso.Professor)
+                    if(user.nivelAcesso == NivelAcesso.Professor)
                     {
                         MenuProfessor.Menu(user);
                     }
-                    if(user.nivelAcesso == Usuarios.Enums.NivelAcesso.Estudante)
+                    if(user.nivelAcesso == NivelAcesso.Estudante)
                     {
                         MenuEstudante.Menu(user);
                     }
