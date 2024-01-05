@@ -81,8 +81,27 @@ public class Program
     
     bool DevolverLivro(int idLivro, int? idUsuario, EstadoLivro novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
     {
+        Livro livro;
+        Usuario usuario;
+        Emprestimo emprestimo;
+        DateTime dataDevolucao;
+        double multa;
+        
+        if (usuarioLogado._nivelAcesso != NivelAcesso.Atendente) usuario = usuarioLogado;
+        else usuario = ObterUsuario((int)idLivro);
+        emprestimo = ObterEmprestimo(idLivro, (int)idUsuario);
+        livro = ObterLivro(idLivro);
+
+        if (usuario == null || emprestimo == null || livro == null) return false;
+
+        dataDevolucao = DateTime.Now;
+        multa = emprestimo.DevolverLivro(dataDevolucao, usuario);
+        usuario._multaTotal += multa;
+        livro.DevolverLivro(novoEstadoLivro);
+
+        return true;
     }
-    
+
     bool CancelarReserva(int idLivro, int idUsuario) // recebe livro e usuario para localizar a reserva
     {
         Livro? livro = ObterLivro(idLivro);

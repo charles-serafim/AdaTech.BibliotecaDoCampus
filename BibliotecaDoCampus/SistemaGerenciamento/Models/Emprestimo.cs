@@ -37,7 +37,7 @@ public class Emprestimo : Reserva
                         + $"Data limite para devolução: {_dataFim.ToString()}\n");
     }
 
-    public void DevolverLivro(DateTime dataDevolucao, Usuario usuario)
+    public double DevolverLivro(DateTime dataDevolucao, Usuario usuario)
     {
         _dataDevolucao = dataDevolucao;
         TimeSpan atraso = dataDevolucao.Subtract(_dataLimite);
@@ -50,11 +50,12 @@ public class Emprestimo : Reserva
 
             Console.WriteLine($"Livro devolvido com {atraso.Days} dias de atraso."
                             + $"Multa: R$ {multa:F2}");
-            return;
+            return multa;
         }
 
         this._estadoReserva = EstadoReserva.Finalizada;
         Console.WriteLine($"Livro devolvido com sucesso!"
                         + $"Muito obrigado por utilizar nossos serviços.");
+        return 0;
     }
 }
