@@ -81,7 +81,20 @@ public class Program
     
     bool CancelarReserva(int idLivro, int idUsuario) // recebe livro e usuario para localizar a reserva
     {
+        Livro? livro = ObterLivro(idLivro);
 
+        if(livro != null)
+        {
+            int indiceReserva = livro._filaDeEspera.FindIndex(usuario => usuario.IdUsuario == idUsuario);
+
+            if(indiceReserva != -1)
+            {
+                livro._filaDeEspera.RemoveAt(indiceReserva);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public List<Emprestimo> ExibirHistorico()
