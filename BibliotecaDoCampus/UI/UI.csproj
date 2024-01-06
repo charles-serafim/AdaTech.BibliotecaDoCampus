@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SistemaGerenciamento\SistemaGerenciamento.csproj" />
-    <ProjectReference Include="..\Usuarios\Usuarios.csproj" />
     <ProjectReference Include="..\Usuario\Usuarios.csproj" />
   </ItemGroup>
 

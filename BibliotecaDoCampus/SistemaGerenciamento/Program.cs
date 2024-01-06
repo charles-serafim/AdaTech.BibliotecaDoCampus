@@ -1,5 +1,7 @@
 ﻿using SistemaGerenciamento.JsonParser;
 using SistemaGerenciamento.Models;
+using SistemaGerenciamento.Usuarios;
+using NivelAcesso = SistemaGerenciamento.Usuarios.NivelAcesso;
 
 namespace SistemaGerenciamento;
 
@@ -44,9 +46,9 @@ public static class Program
         Livro? livro = ObterLivro(dadoLivro);
         Usuario? usuario = ObterUsuario(idUsuario);
 
-        if (usuario._nivelAcesso == NivelAcesso.Atendente || usuario._nivelAcesso == NivelAcesso.Diretor) return false;
+        if (usuario.nivelAcesso == NivelAcesso.Atendente || usuario.nivelAcesso == NivelAcesso.Diretor) return false;
 
-        if (usuario._nivelAcesso == NivelAcesso.Estudante)
+        if (usuario.nivelAcesso == NivelAcesso.Estudante)
         {
             livro._filaDeEspera.Add(usuario);
             return true;
@@ -54,7 +56,7 @@ public static class Program
 
         for (int i = 0; i < livro._filaDeEspera.Count; i++)
         {
-            if (livro._filaDeEspera[i + 1]._nivelAcesso == NivelAcesso.Estudante)
+            if (livro._filaDeEspera[i + 1].nivelAcesso == NivelAcesso.Estudante)
             {
                 livro._filaDeEspera.Insert(i, usuario);
                 return true;
@@ -73,7 +75,7 @@ public static class Program
         DateTime dataDevolucao;
         double multa;
         
-        if (usuarioLogado._nivelAcesso != NivelAcesso.Atendente) usuario = usuarioLogado;
+        if (usuarioLogado.nivelAcesso != NivelAcesso.Atendente) usuario = usuarioLogado;
         else usuario = ObterUsuario((int)idUsuario);
         livro = ObterLivro(dadoLivro);
         emprestimo = ObterEmprestimo(livro.IdLivro, (int)idUsuario);
@@ -82,7 +84,7 @@ public static class Program
 
         dataDevolucao = DateTime.Now;
         multa = emprestimo.DevolverLivro(dataDevolucao, usuario);
-        usuario._multaTotal += multa;
+        usuario.debitoTotal += multa;
         if(novoEstadoLivro == null) novoEstadoLivro = EstadoLivro.Disponivel;
         else livro.DevolverLivro((EstadoLivro)novoEstadoLivro);
 
@@ -95,7 +97,7 @@ public static class Program
 
         if(livro != null)
         {
-            int indiceReserva = livro._filaDeEspera.FindIndex(usuario => usuario.IdUsuario == idUsuario);
+            int indiceReserva = livro._filaDeEspera.FindIndex(usuario => usuario.codigoDeAcesso == idUsuario);
 
             if(indiceReserva != -1)
             {
@@ -107,14 +109,14 @@ public static class Program
         return false;
     }
     
-    public List<Emprestimo> ExibirHistorico()
+    public static List<Emprestimo> ExibirHistorico()
     {
         return historicoDeEmprestimos;
     }
     
     public static List<Emprestimo> ExibirHistoricoDoUsuario()
     {
-        return historicoDeEmprestimos.FindAll(x => x._idUsuario == usuarioLogado.IdUsuario);
+        return historicoDeEmprestimos.FindAll(x => x._idUsuario == usuarioLogado.codigoDeAcesso);
     }
     
     void ListarReservasDoLivro(string dadoLivro); // exibe a fila de espera para um livro
@@ -139,9 +141,9 @@ public static class Program
 
     public static Usuario? ObterUsuario(int idUsuario)
     {
-        if (listaDeUsuarios.Find(x => x.IdUsuario == idUsuario) != null)
+        if (listaDeUsuarios.Find(x => x.codigoDeAcesso == idUsuario) != null)
         {
-            return listaDeUsuarios.Find(x => x.IdUsuario == idUsuario);
+            return listaDeUsuarios.Find(x => x.codigoDeAcesso == idUsuario);
         }
         else
         {

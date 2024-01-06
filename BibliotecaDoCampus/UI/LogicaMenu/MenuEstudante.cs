@@ -1,13 +1,7 @@
 ﻿using SistemaGerenciamento;
 using SistemaGerenciamento.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using Usuarios;
-using Usuario = Usuarios.Usuario;
+using SistemaGerenciamento.Usuarios;
+using Usuario = SistemaGerenciamento.Usuarios.Usuario;
 
 namespace UI.LogicaMenu
 {
@@ -74,8 +68,8 @@ namespace UI.LogicaMenu
                     List<Emprestimo> historico = estudante.ExibirHistorico();
                     foreach (var item in historico)
                     {
-                        Console.WriteLine(item.idLivro);
-                        Console.WriteLine(item.idLivro);
+                        Console.WriteLine(item._idEmprestimo);
+                        Console.WriteLine(item._idLivro);
                         Console.WriteLine(item._dataDevolucao);
                         Console.WriteLine(item.multa);
                     };

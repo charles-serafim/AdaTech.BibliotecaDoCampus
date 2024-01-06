@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaGerenciamento.Usuarios;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -44,7 +45,7 @@ public class Emprestimo
         if (atraso.Days > 0)
         {
             multa += atraso.Days * ValorMultaDiaria;
-            usuario._multaTotal += multa;
+            usuario.debitoTotal += multa;
 
             Console.WriteLine($"Livro devolvido com {atraso.Days} dias de atraso."
                             + $"Multa: R$ {multa:F2}");

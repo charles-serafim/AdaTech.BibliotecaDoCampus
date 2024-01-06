@@ -5,11 +5,6 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGerenciamento", "SistemaGerenciamento\SistemaGerenciamento.csproj", "{50D77A87-1FE5-4FF8-84F9-2F01A49B2C17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Usuarios", "Usuarios\Usuarios.csproj", "{C6C451BD-6006-4E93-9475-327B3110FA7E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{50D77A87-1FE5-4FF8-84F9-2F01A49B2C17} = {50D77A87-1FE5-4FF8-84F9-2F01A49B2C17}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI\UI.csproj", "{DFB30C76-FECE-4FA1-BD92-AB2989B7BEB1}"
 EndProject
 Global
@@ -22,10 +17,6 @@ Global
 		{50D77A87-1FE5-4FF8-84F9-2F01A49B2C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50D77A87-1FE5-4FF8-84F9-2F01A49B2C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50D77A87-1FE5-4FF8-84F9-2F01A49B2C17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6C451BD-6006-4E93-9475-327B3110FA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6C451BD-6006-4E93-9475-327B3110FA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6C451BD-6006-4E93-9475-327B3110FA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6C451BD-6006-4E93-9475-327B3110FA7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DFB30C76-FECE-4FA1-BD92-AB2989B7BEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DFB30C76-FECE-4FA1-BD92-AB2989B7BEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFB30C76-FECE-4FA1-BD92-AB2989B7BEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU

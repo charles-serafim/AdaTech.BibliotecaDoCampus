@@ -7,6 +7,7 @@ using Usuarios.Funcionarios;
 using SistemaGerenciamento;
 using SistemaGerenciamento.Models;
 using Usuarios;
+using SistemaGerenciamento.Usuarios;
 
 namespace UI.LogicaMenu
 {

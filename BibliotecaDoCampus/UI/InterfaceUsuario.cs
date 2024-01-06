@@ -1,4 +1,5 @@
 ﻿using SistemaGerenciamento;
+using SistemaGerenciamento.Usuarios;
 using UI.LogicaMenu;
 using Usuarios;
 
