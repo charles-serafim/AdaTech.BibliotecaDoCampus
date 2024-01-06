@@ -22,6 +22,7 @@ public static class Program
         historicoDeEmprestimos = Listagem.GetEmprestimos();
         solicitacoesAlteracaoCadastro = Listagem.GetSolicitacoesDeAlteracaoCadastro();
     } // realiza o carregamento do conteúdo dos arquivos JSON para as listas locais da classe
+
     void SalvarTudo()
     {
         JsonParser<Livro>.SalvarLivros(listaDeLivros);
@@ -29,15 +30,18 @@ public static class Program
         JsonParser<Emprestimo>.SalvarEmprestimos(historicoDeEmprestimos);
         JsonParser<Usuario>.SalvarUsuarios(solicitacoesAlteracaoCadastro);
     } // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
+
     public static List<Livro> ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
+    
     public static bool VerificarDisponibilidade(string dadoLivro)
     {
         Livro? livro = ObterLivro(dadoLivro);
         return livro?._estadoLivro == EstadoLivro.Disponível;
     }
-    public static bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
+    
+    public static bool ReservarLivro(string dadoLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
     {
-        Livro? livro = ObterLivro(idLivro);
+        Livro? livro = ObterLivro(dadoLivro);
         Usuario? usuario = ObterUsuario(idUsuario);
 
         if (usuario._nivelAcesso == NivelAcesso.Atendente || usuario._nivelAcesso == NivelAcesso.Diretor) return false;
@@ -59,8 +63,9 @@ public static class Program
 
         livro._filaDeEspera.Add(usuario);
         return true;
-    }    
-    public static bool DevolverLivro(int idLivro, int? idUsuario, EstadoLivro? novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
+    }
+
+    public static bool DevolverLivro(string dadoLivro, int? idUsuario, EstadoLivro? novoEstadoLivro) // se for o atendente que está logado, ele pode realizar a devolução de um emprestimo de um outro usuario, se for o proprio usuario, ele não precisa utilizar a variavel idUsuario
     {
         Livro livro;
         Usuario usuario;
@@ -69,9 +74,9 @@ public static class Program
         double multa;
         
         if (usuarioLogado._nivelAcesso != NivelAcesso.Atendente) usuario = usuarioLogado;
-        else usuario = ObterUsuario((int)idLivro);
-        emprestimo = ObterEmprestimo(idLivro, (int)idUsuario);
-        livro = ObterLivro(idLivro);
+        else usuario = ObterUsuario((int)idUsuario);
+        livro = ObterLivro(dadoLivro);
+        emprestimo = ObterEmprestimo(livro.IdLivro, (int)idUsuario);
 
         if (usuario == null || emprestimo == null || livro == null) return false;
 
@@ -83,9 +88,10 @@ public static class Program
 
         return true;
     }
-    public static bool CancelarReserva(int idLivro, int idUsuario) // recebe livro e usuario para localizar a reserva
+    
+    public static bool CancelarReserva(string dadoLivro, int idUsuario) // recebe livro e usuario para localizar a reserva
     {
-        Livro? livro = ObterLivro(idLivro);
+        Livro? livro = ObterLivro(dadoLivro);
 
         if(livro != null)
         {
@@ -100,28 +106,37 @@ public static class Program
 
         return false;
     }
+    
     public List<Emprestimo> ExibirHistorico()
     {
         return historicoDeEmprestimos;
     }
+    
     public static List<Emprestimo> ExibirHistoricoDoUsuario()
     {
         return historicoDeEmprestimos.FindAll(x => x._idUsuario == usuarioLogado.IdUsuario);
     }
-    void ListarReservasDoLivro(int idLivro); // exibe a fila de espera para um livro
+    
+    void ListarReservasDoLivro(string dadoLivro); // exibe a fila de espera para um livro
+    
     void ListarReservasDoUsuario(); // exibe todas as reservas do usuarioLogado    
+    
     public static void SolicitarAlteracaoCadastro(Usuario usuario, Usuario alteracao)
     {
         solicitacoesAlteracaoCadastro.Add(Tuple.Create(usuario, alteracao));
     } // produz uma instancia de usuario com as informações novas e adiciona à lista solicitacoesAlteracaoCadastro a serem analisadas pelos atendentes
+    
     bool AnalisarPedidosDeAlteracao(); // exibe o conteudo de solicitacoesAlteracaoCadastro (se houver) para análise e aprovação do atendente e chama AlterarCadastro()
+    
     bool AlterarCadastro(); // substitui na listaDeUsuarios a instancia original de um usuario pela em solicitacoesAlteracaoCadastro, após a aprovação da alteração de seu cadastro
+
     public static Livro? ObterLivro(string dadoLivro)
     {
         if (int.TryParse(dadoLivro, out int idLivro)) return listaDeLivros.FirstOrDefault(livro => livro.IdLivro == idLivro);
 
         return listaDeLivros.FirstOrDefault(livro => livro._titulo.Contains(dadoLivro));
     }
+
     public static Usuario? ObterUsuario(int idUsuario)
     {
         if (listaDeUsuarios.Find(x => x.IdUsuario == idUsuario) != null)
