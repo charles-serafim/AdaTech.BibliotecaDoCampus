@@ -1,11 +1,9 @@
 ﻿using SistemaGerenciamento.JsonParser;
 using SistemaGerenciamento.Models;
 
-
-
 namespace SistemaGerenciamento;
 
-public class Program
+public static class Program
 {
     public static List<Livro> listaDeLivros = new List<Livro>();
 
@@ -32,9 +30,9 @@ public class Program
         JsonParser<Usuario>.SalvarUsuarios(solicitacoesAlteracaoCadastro);
     } // realiza o salvamento do conteúdo das listas locais no arquivo JSON, viabilizando a persistência dos dados gerados e modificações
     public static List<Livro> ListarLivros(); // exibe livros aplicando o filtro do acervo de acordo com usuarioLogado
-    public static bool VerificarDisponibilidade(int idLivro)
+    public static bool VerificarDisponibilidade(string dadoLivro)
     {
-        Livro? livro = ObterLivro(idLivro);
+        Livro? livro = ObterLivro(dadoLivro);
         return livro?._estadoLivro == EstadoLivro.Disponível;
     }
     public static bool ReservarLivro(int idLivro, int idUsuario) // retorna se houve sucesso; implementar regras de adição de acordo com a prioridade
@@ -118,16 +116,11 @@ public class Program
     } // produz uma instancia de usuario com as informações novas e adiciona à lista solicitacoesAlteracaoCadastro a serem analisadas pelos atendentes
     bool AnalisarPedidosDeAlteracao(); // exibe o conteudo de solicitacoesAlteracaoCadastro (se houver) para análise e aprovação do atendente e chama AlterarCadastro()
     bool AlterarCadastro(); // substitui na listaDeUsuarios a instancia original de um usuario pela em solicitacoesAlteracaoCadastro, após a aprovação da alteração de seu cadastro
-    public static Livro? ObterLivro(int idLivro)
+    public static Livro? ObterLivro(string dadoLivro)
     {
-        if (listaDeLivros.Find(x => x.IdLivro == idLivro) != null)
-        {
-            return listaDeLivros.Find(x => x.IdLivro == idLivro);
-        }
-        else
-        {
-            return null;
-        }
+        if (int.TryParse(dadoLivro, out int idLivro)) return listaDeLivros.FirstOrDefault(livro => livro.IdLivro == idLivro);
+
+        return listaDeLivros.FirstOrDefault(livro => livro._titulo.Contains(dadoLivro));
     }
     public static Usuario? ObterUsuario(int idUsuario)
     {
