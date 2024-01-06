@@ -7,4 +7,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="Data\solicitacoesAlteracaoCadastro.json">
+      <SubType>Component</SubType>
+    </None>
+    <None Update="Data\historicoDeEmprestimos.json">
+      <SubType>Component</SubType>
+    </None>
+    <None Update="Data\listaDeUsuarios.json">
+      <SubType>Component</SubType>
+    </None>
+	<None Update="Data\listaDeLivros.json">
+		<SubType>Component</SubType>
+	</None>
+  </ItemGroup>
+
 </Project>

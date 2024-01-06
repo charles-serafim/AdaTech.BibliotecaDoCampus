@@ -1,0 +1,37 @@
+﻿[
+  {
+    "_titulo": "Compiladores: Princípios, Técnicas e Ferramentas",
+    "_autores": [ "Alfred V. Aho", "Monica S. Lam", "Ravi Sethi", "Jeffrey D. Ullman" ],
+    "_edicao": 1,
+    "_acervo": 1,
+    "_estadoLivro": 1
+  },
+  {
+    "_titulo": "O Hobbit",
+    "_autores": [ "J. R. R. Tolkien" ],
+    "_edicao": 3,
+    "_acervo": 1,
+    "_estadoLivro": 2
+  },
+  {
+    "_titulo": "Domain-driven design: atacando as complexidades no coração do software",
+    "_autores": [ "Eric Evans" ],
+    "_edicao": 3,
+    "_acervo": 1,
+    "_estadoLivro": 3
+  },
+  {
+    "_titulo": "A Origem das Espécies",
+    "_autores": [ "Charles Darwin" ],
+    "_edicao": 1,
+    "_acervo": 2,
+    "_estadoLivro": 4
+  },
+  {
+    "_titulo": "Cem anos de solidão",
+    "_autores": [ "Gabriel García Márquez" ],
+    "_edicao": 129,
+    "_acervo": 2,
+    "_estadoLivro": 5
+  }
+]
