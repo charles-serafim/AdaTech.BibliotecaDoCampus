@@ -18,6 +18,8 @@ public class Livro
     public Acervo _acervo { get; set; }
     public EstadoLivro _estadoLivro { get; set; }
 
+    public int solicitante;
+
 
     // Possivelmente será necessário alterrar
     public Livro(string titulo, string[] autores, int edicao, Acervo acervo, EstadoLivro estadoLivro)

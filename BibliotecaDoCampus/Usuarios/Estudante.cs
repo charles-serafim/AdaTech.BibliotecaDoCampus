@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Usuarios
 {
-    internal class Estudante : Usuario
+    public class Estudante : Usuario
     {
         int matricula;
         public Estudante()
@@ -23,7 +23,7 @@ namespace Usuarios
         }
         public override bool CancelarReserva(int idLivro)
         {
-            Program.CancelarReserva(idLivro, matricula);
+            return Program.CancelarReserva(idLivro, matricula);
         }
         public override void DevolverLivro(int idLivro)
         {
@@ -60,14 +60,28 @@ namespace Usuarios
         }
         public void SolicitarLivro(int idLivro)
         {
-            Livro livro = Livro.Consultar(idLivro);
-            if (livro.estadoLivro == EstadoLivro.Disponivel)
+            Livro livro = Program.ObterLivro(idLivro);
+            if (livro._estadoLivro == EstadoLivro.Disponivel)
             {
-                livro.estadoLivro = EstadoLivro.AguardandoAprovacao;
-                livro.requerente = this.matricula;
+                livro._estadoLivro = EstadoLivro.AguardandoAprovacao;
+                livro.solicitante = this.matricula;
             }
         }
+        public Estudante SolicitarAlteracaoCadastro(string? nome, string? sobrenome, string? email)
+        {
+            Estudante estudante = new Estudante();
+            if (nome != null) estudante.nome = nome;
+            else estudante.nome = this.nome;
+            if (sobrenome != null) estudante.sobrenome = sobrenome;
+            else estudante.sobrenome = this.sobrenome;
+            if (email != null) estudante.email = email;
+            else estudante.email = this.email;
+            estudante.matricula = this.matricula;
+            estudante.debitoTotal = this.debitoTotal;
+            estudante.nivelAcesso = this.nivelAcesso;
 
+            return estudante;
+    }
         public override double ConsultarDebitos()
         {
             return this.debitoTotal;

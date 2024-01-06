@@ -12,5 +12,6 @@ public enum EstadoLivro
     Reservado = 2,
     Emprestado = 3,
     Danificado = 4,
-    Perdido = 5
+    Perdido = 5,
+    AguardandoAprovacao = 6
 }

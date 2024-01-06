@@ -32,7 +32,7 @@ namespace UI
                     }
                     if(user.nivelAcesso == NivelAcesso.Estudante)
                     {
-                        MenuEstudante.Menu(user);
+                        MenuEstudante.Menu((Estudante)user);
                     }
                 }
                 else

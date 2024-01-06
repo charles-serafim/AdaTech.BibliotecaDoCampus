@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGerenciamento.Models;
 
-public class Usuario
+public class UsuarioDummy
 {
     private static int s_contadorUsuario = 0;
     public int IdUsuario { get; set; }
@@ -15,7 +15,7 @@ public class Usuario
     public double _multaTotal = 0;
     public NivelAcesso _nivelAcesso;
 
-    public Usuario(string nome, string email, NivelAcesso nivelAcesso)
+    public UsuarioDummy(string nome, string email, NivelAcesso nivelAcesso)
     {
         IdUsuario = ++s_contadorUsuario;
         _nome = nome;

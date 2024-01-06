@@ -1,4 +1,5 @@
-﻿using SistemaGerenciamento.Models;
+﻿using SistemaGerenciamento;
+using SistemaGerenciamento.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace UI.LogicaMenu
 {
     internal static class MenuEstudante
     {
-        internal static void Menu(Usuario estudante)
+        internal static void Menu(Estudante estudante)
         {
             Console.WriteLine($"Logado como: {estudante.nome}");
             
@@ -46,8 +47,13 @@ namespace UI.LogicaMenu
                     estudante.VerificarDisponibilidade(idLivro); 
                     break;                          //Implementado VerificarDisponibilidade()
                 case 3:
-                    estudante.SolicitarLivro();     //Aguardando implementação do sistema
-                    break;                          //SolicitarLivro()
+                    Console.WriteLine("Informe o id do livro que deseja alugar");
+                    idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
+                    if (estudante.VerificarDisponibilidade(idLivro))
+                    {
+                        estudante.SolicitarLivro(idLivro);
+                    }
+                    break;                          //Implementado SolicitarLivro()
                 case 4:
                     Console.WriteLine("Informe o id do livro que deseja reservar");
                     idLivro = int.TryParse(Console.ReadLine(), out idLivro) ? idLivro : 0;
@@ -78,8 +84,37 @@ namespace UI.LogicaMenu
                     Console.WriteLine(estudante.ConsultarDebitos());
                     break;                          //Implementado ConsultarDebitos()
                 case 9:
-                    estudante.SolicitarAlteracaoCadastro();     //Aguardando implementação do sistema
-                    break;                          //SolicitarAlteracaoCadastro()
+                    string nome;
+                    string sobrenome;
+                    string email;
+                    
+                    Console.WriteLine("Deseja alterar o nome? 1-SIM  OUTRO VALOR-NAO");
+                    int opcaoAlteracao = int.TryParse(Console.ReadLine(), out opcaoAlteracao) ? opcaoAlteracao : 0;
+                    if (opcaoAlteracao == 1)
+                    {
+                        Console.WriteLine("Informe o novo nome");
+                        nome = Console.ReadLine();
+                    } else nome = null;
+
+                    Console.WriteLine("Deseja alterar o sobrenome? 1-SIM OUTRO VALOR-NAO");
+                    opcaoAlteracao = int.TryParse(Console.ReadLine(), out opcaoAlteracao) ? opcaoAlteracao : 0;
+                    if (opcaoAlteracao == 1)
+                    {
+                        Console.WriteLine("Informe o novo sobrenome");
+                        sobrenome = Console.ReadLine();
+                    } else sobrenome = null;
+                    
+                    Console.WriteLine("Deseja alterar o email? 1-SIM OUTRO VALOR-NAO");
+                    opcaoAlteracao = int.TryParse(Console.ReadLine(), out opcaoAlteracao) ? opcaoAlteracao : 0;
+                    if (opcaoAlteracao == 1)
+                    {
+                        Console.WriteLine("Informe o novo email");
+                        email = Console.ReadLine();
+                    } else email = null;
+                    Usuario alteracao = estudante.SolicitarAlteracaoCadastro(nome, sobrenome, email);
+
+                    Program.SolicitarAlteracaoCadastro(estudante, alteracao);
+                    break;                          //Implementado SolicitarAlteracaoCadastro()
                 case 0:
                     break;
                 default:
