@@ -13,7 +13,7 @@ namespace SistemaGerenciamento
     public class Autenticacao
     {
 
-        internal byte[] GerarSenhaHash(string senha)
+        internal static byte[] GerarSenhaHash(string senha)
         {
             return SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(senha));
         }
@@ -109,9 +109,9 @@ namespace SistemaGerenciamento
 
         private static Atendente BuscarAtendentePorId(int idAtendente)
         {
-            var atendente = File.ReadAllText("atendente.json");
+            Atendente atendente = File.ReadAllText("atendente.json");
             var json = JsonConvert.DeserializeObjeto<List<Atendente>>(atendente);
-            var atendente = json.FirstOrDefault(f => f.Id == idAtendente);
+            atendente = json.FirstOrDefault(f => f.Id == idAtendente);
 
             if (atendente == null)
             {
@@ -123,18 +123,18 @@ namespace SistemaGerenciamento
 
         private static Diretor BuscarDiretorPorId(int idDiretor)
         {
-            var diretor = File.ReadAllText("diretor.json");
+            Diretor diretor = File.ReadAllText("diretor.json");
             var json = JsonConvert.DeserializeObjeto<List<Diretor>>(diretor);
-            var diretor = json.FirstOrDefault(f => f.Id == idDiretor);
+            diretor = json.FirstOrDefault(f => f.Id == idDiretor);
 
             return diretor;
         }
 
         private static Professor BuscarProfessorPorId(int idProfessor)
         {
-            var professor = File.ReadAllText("professor.json");
+            Professor professor = File.ReadAllText("professor.json");
             var json = JsonConvert.DeserializeObjeto<List<Professor>>(professor);
-            var professor = json.FirstOrDefault(f => f.Id == idProfessor);
+            professor = json.FirstOrDefault(f => f.Id == idProfessor);
 
             return professor;
         }
@@ -182,6 +182,7 @@ namespace SistemaGerenciamento
 
 
             }
+            return false;
         }
     }
 
