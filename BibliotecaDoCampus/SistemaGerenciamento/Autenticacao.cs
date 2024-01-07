@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using Usuarios.Funcionarios;
 
 
-namespace Usuarios
+namespace SistemaGerenciamento
 {
     public class Autenticacao
     {
